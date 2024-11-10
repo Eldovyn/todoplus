@@ -1,16 +1,30 @@
 "use client";
-import React from 'react';
+import React, { use } from 'react';
 import IconWeb from '../../../public/IconRemoverBg.png'
 import Image from 'next/image'
 import { FaTasks } from "react-icons/fa";
 import { MdOutlineAccountCircle } from "react-icons/md";
 import { LuHistory } from "react-icons/lu";
+import { IoMdAdd } from "react-icons/io";
+import { useState, useEffect } from 'react';
+import AddTask from '@/components/AddTask';
 
-const Sidebar = () => {
-  // Event handler untuk meng-handle klik pada setiap item
-  const handleItemClick = (itemName: string) => {
-    alert(`You clicked on ${itemName}`);
+const Sidebar: React.FunctionComponent = () => {
+  const [page, setPage] = useState<React.FunctionComponent>(AddTask);
+  const [content, setContent] = useState('');
+
+  const handleItemClick = (component: React.FunctionComponent) => {
+    setPage(component);
   };
+
+  useEffect(() => {
+    handleItemClick(AddTask);
+  }, []);
+
+  const setTask = () => {
+    setPage(AddTask)
+    setContent('Task')
+  }
 
   return (
     <div className="flex min-h-screen bg-gray-100">
@@ -24,7 +38,18 @@ const Sidebar = () => {
             <li>
               <a
                 href="#"
-                onClick={() => handleItemClick("Home")}
+                onClick={setTask}
+                className="flex items-center px-2 py-2 text-gray-200 hover:bg-gray-700 rounded"
+              >
+                <i className="bi bi-house text-lg mr-2"></i>
+                <IoMdAdd />
+                <span className="hidden sm:inline ms-2">Create</span>
+              </a>
+            </li>
+            <li>
+              <a
+                href="#"
+                onClick={setTask}
                 className="flex items-center px-2 py-2 text-gray-200 hover:bg-gray-700 rounded"
               >
                 <i className="bi bi-house text-lg mr-2"></i>
@@ -35,7 +60,7 @@ const Sidebar = () => {
             <li>
               <a
                 href="#"
-                onClick={() => handleItemClick("Dashboard")}
+                onClick={setTask}
                 className="flex items-center px-2 py-2 text-gray-200 hover:bg-gray-700 rounded"
               >
                 <i className="bi bi-speedometer2 text-lg mr-2"></i>
@@ -46,7 +71,7 @@ const Sidebar = () => {
             <li>
               <a
                 href="#"
-                onClick={() => handleItemClick("Dashboard")}
+                onClick={setTask}
                 className="flex items-center px-2 py-2 text-gray-200 hover:bg-gray-700 rounded"
               >
                 <i className="bi bi-speedometer2 text-lg mr-2"></i>
@@ -67,8 +92,8 @@ const Sidebar = () => {
           </div>
         </div>
       </aside>
-      <main className="flex-1 p-6">
-        Content area...
+      <main className="flex-1 p-6 flex justify-center items-center">
+        <>{page}</>
       </main>
     </div>
   );
