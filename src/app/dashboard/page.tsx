@@ -8,6 +8,7 @@ import { LuHistory } from "react-icons/lu";
 import { IoMdAdd } from "react-icons/io";
 import { useState, useEffect } from 'react';
 import AddTask from '@/components/AddTask';
+import Task from '@/components/Task';
 
 const Sidebar: React.FunctionComponent = () => {
   const [page, setPage] = useState<React.FunctionComponent>(AddTask);
@@ -18,11 +19,21 @@ const Sidebar: React.FunctionComponent = () => {
   };
 
   useEffect(() => {
-    handleItemClick(AddTask);
+    if (content === 'Task') {
+      handleItemClick(Task);
+    }
+    else if (content === 'Add Task') {
+      handleItemClick(AddTask);
+    }
   }, []);
 
-  const setTask = () => {
+  const setAddTask = () => {
     setPage(AddTask)
+    setContent('Add Task')
+  }
+
+  const setTask = () => {
+    setPage(Task)
     setContent('Task')
   }
 
@@ -37,7 +48,7 @@ const Sidebar: React.FunctionComponent = () => {
           <ul className="space-y-2">
             <li>
               <a
-                onClick={setTask}
+                onClick={setAddTask}
                 className="flex items-center px-2 py-2 text-gray-200 hover:bg-gray-700 rounded cursor-pointer"
               >
                 <i className="bi bi-house text-lg mr-2"></i>
@@ -57,7 +68,7 @@ const Sidebar: React.FunctionComponent = () => {
             </li>
             <li>
               <a
-                onClick={setTask}
+                onClick={setAddTask}
                 className="flex items-center px-2 py-2 text-gray-200 hover:bg-gray-700 rounded cursor-pointer"
               >
                 <i className="bi bi-speedometer2 text-lg mr-2"></i>
@@ -67,7 +78,7 @@ const Sidebar: React.FunctionComponent = () => {
             </li>
             <li>
               <a
-                onClick={setTask}
+                onClick={setAddTask}
                 className="flex items-center px-2 py-2 text-gray-200 hover:bg-gray-700 rounded cursor-pointer"
               >
                 <i className="bi bi-speedometer2 text-lg mr-2"></i>
