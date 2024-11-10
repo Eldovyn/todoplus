@@ -37,7 +37,6 @@ const Sidebar: React.FunctionComponent = () => {
           <ul className="space-y-2">
             <li>
               <a
-                href="#"
                 onClick={setTask}
                 className="flex items-center px-2 py-2 text-gray-200 hover:bg-gray-700 rounded"
               >
@@ -48,7 +47,6 @@ const Sidebar: React.FunctionComponent = () => {
             </li>
             <li>
               <a
-                href="#"
                 onClick={setTask}
                 className="flex items-center px-2 py-2 text-gray-200 hover:bg-gray-700 rounded"
               >
@@ -59,7 +57,6 @@ const Sidebar: React.FunctionComponent = () => {
             </li>
             <li>
               <a
-                href="#"
                 onClick={setTask}
                 className="flex items-center px-2 py-2 text-gray-200 hover:bg-gray-700 rounded"
               >
@@ -70,7 +67,6 @@ const Sidebar: React.FunctionComponent = () => {
             </li>
             <li>
               <a
-                href="#"
                 onClick={setTask}
                 className="flex items-center px-2 py-2 text-gray-200 hover:bg-gray-700 rounded"
               >
