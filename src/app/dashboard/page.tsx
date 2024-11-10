@@ -38,7 +38,7 @@ const Sidebar: React.FunctionComponent = () => {
             <li>
               <a
                 onClick={setTask}
-                className="flex items-center px-2 py-2 text-gray-200 hover:bg-gray-700 rounded"
+                className="flex items-center px-2 py-2 text-gray-200 hover:bg-gray-700 rounded cursor-pointer"
               >
                 <i className="bi bi-house text-lg mr-2"></i>
                 <IoMdAdd />
@@ -48,7 +48,7 @@ const Sidebar: React.FunctionComponent = () => {
             <li>
               <a
                 onClick={setTask}
-                className="flex items-center px-2 py-2 text-gray-200 hover:bg-gray-700 rounded"
+                className="flex items-center px-2 py-2 text-gray-200 hover:bg-gray-700 rounded cursor-pointer"
               >
                 <i className="bi bi-house text-lg mr-2"></i>
                 <FaTasks />
@@ -58,7 +58,7 @@ const Sidebar: React.FunctionComponent = () => {
             <li>
               <a
                 onClick={setTask}
-                className="flex items-center px-2 py-2 text-gray-200 hover:bg-gray-700 rounded"
+                className="flex items-center px-2 py-2 text-gray-200 hover:bg-gray-700 rounded cursor-pointer"
               >
                 <i className="bi bi-speedometer2 text-lg mr-2"></i>
                 <LuHistory />
@@ -68,7 +68,7 @@ const Sidebar: React.FunctionComponent = () => {
             <li>
               <a
                 onClick={setTask}
-                className="flex items-center px-2 py-2 text-gray-200 hover:bg-gray-700 rounded"
+                className="flex items-center px-2 py-2 text-gray-200 hover:bg-gray-700 rounded cursor-pointer"
               >
                 <i className="bi bi-speedometer2 text-lg mr-2"></i>
                 <MdOutlineAccountCircle />
