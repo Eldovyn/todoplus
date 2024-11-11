@@ -108,7 +108,7 @@ const Sidebar: React.FunctionComponent = () => {
           </div>
         </div>
       </aside>
-      <main className={`${content === 'Account' ? '' : 'flex-1 flex p-6 justify-center items-center'}`}>
+      <main className={`${content === 'Account' ? 'flex-1 flex' : 'flex-1 flex p-6 justify-center items-center'}`}>
         <>{page}</>
       </main>
     </div>
