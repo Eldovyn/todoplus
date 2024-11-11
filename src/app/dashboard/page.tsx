@@ -9,6 +9,7 @@ import { IoMdAdd } from "react-icons/io";
 import { useState, useEffect } from 'react';
 import AddTask from '@/components/AddTask';
 import Task from '@/components/Task';
+import AccountPage from '@/components/Account';
 
 const Sidebar: React.FunctionComponent = () => {
   const [page, setPage] = useState<React.FunctionComponent>(AddTask);
@@ -24,6 +25,8 @@ const Sidebar: React.FunctionComponent = () => {
     }
     else if (content === 'Add Task') {
       handleItemClick(AddTask);
+    } else if (content === 'Account') {
+      handleItemClick(AccountPage);
     }
   }, []);
 
@@ -37,6 +40,11 @@ const Sidebar: React.FunctionComponent = () => {
     setContent('Task')
   }
 
+  const setAccount = () => {
+    setPage(AccountPage)
+    setContent('Account')
+  }
+
   return (
     <div className="flex min-h-screen bg-gray-100">
       <aside className="w-64 bg-gray-900 text-white flex flex-col">
@@ -44,6 +52,7 @@ const Sidebar: React.FunctionComponent = () => {
           <Image src={IconWeb} alt='' className='w-11 me-2' />
           <p className='font-bold text-lg'>TodoPlus</p>
         </div>
+        <hr className="border-gray-700" />
         <nav className="flex-1 px-2">
           <ul className="space-y-2">
             <li>
@@ -78,7 +87,7 @@ const Sidebar: React.FunctionComponent = () => {
             </li>
             <li>
               <a
-                onClick={setAddTask}
+                onClick={setAccount}
                 className="flex items-center px-2 py-2 text-gray-200 hover:bg-gray-700 rounded cursor-pointer"
               >
                 <i className="bi bi-speedometer2 text-lg mr-2"></i>
@@ -99,7 +108,7 @@ const Sidebar: React.FunctionComponent = () => {
           </div>
         </div>
       </aside>
-      <main className="flex-1 p-6 flex justify-center items-center">
+      <main className={`${content === 'Account' ? '' : 'flex-1 flex p-6 justify-center items-center'}`}>
         <>{page}</>
       </main>
     </div>
