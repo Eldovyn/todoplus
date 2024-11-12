@@ -47,7 +47,7 @@ const Sidebar: React.FunctionComponent = () => {
 
   return (
     <div className="flex min-h-screen bg-gray-100">
-      <aside className="w-64 bg-gray-900 text-white flex flex-col">
+      <aside className="w-64 bg-gray-900 text-white flex flex-col border-r border-gray-700">
         <div className='flex justify-start p-5'>
           <Image src={IconWeb} alt='' className='w-11 me-2' />
           <p className='font-bold text-lg'>TodoPlus</p>
