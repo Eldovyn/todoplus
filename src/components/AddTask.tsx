@@ -15,10 +15,10 @@ const AddTask: React.FunctionComponent = () => {
                 <div className="border rounded-md p-4 bg-gray-900 w-[60%] mx-auto flex justify-center items-center mt-[17rem] text-white">
                     <form className="w-full mx-auto p-4">
                         <div className="mb-3">
-                            <input type="email" placeholder="Task" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="email" aria-describedby="emailHelp" />
+                            <input type="text" placeholder="Task" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black" id="email" aria-describedby="emailHelp" />
                         </div>
                         <div className="mb-3">
-                            <input type="password" placeholder="Description" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" id="password" />
+                            <input type="text" placeholder="Description" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black" id="password" />
                         </div>
                         <div className="flex justify-end">
                             <button type="submit" className="w-[8rem] inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Submit</button>
