@@ -49,7 +49,7 @@ const Home: React.FunctionComponent = () => {
               <li className="nav-item">
                 <div className="flex flex-row text-white items-center cursor-pointer">
                   <MdOutlineHistoryToggleOff size={25} />
-                  <div className="me-1 ms-1">Todo List</div>
+                  <div className="me-1 ms-1">History</div>
                 </div>
               </li>
               <li className="nav-item">
@@ -80,19 +80,19 @@ const Home: React.FunctionComponent = () => {
           </div>
         </form>
         <br />
-        <hr className="w-[80rem] mx-auto"/>
+        <hr className="w-[80%] mx-auto"/>
         <br />
-        <div className="border rounded-lg shadow p-4 text-white w-[80rem] mx-auto m-5 bg-gray-900">
+        <div className="border rounded-lg shadow p-4 text-white w-[80%] mx-auto m-5 bg-gray-900">
           <div className="p-4">
             This is some text within a card body.
           </div>
         </div>
-        <div className="border rounded-lg shadow p-4 text-white w-[80rem] mx-auto m-5 bg-gray-900">
+        <div className="border rounded-lg shadow p-4 text-white w-[80%] mx-auto m-5 bg-gray-900">
           <div className="p-4">
             This is some text within a card body.
           </div>
         </div>
-        <div className="border rounded-lg shadow p-4 text-white w-[80rem] mx-auto m-5 bg-gray-900">
+        <div className="border rounded-lg shadow p-4 text-white w-[80%] mx-auto m-5 bg-gray-900">
           <div className="p-4">
             This is some text within a card body.
           </div>
