@@ -1,9 +1,9 @@
 "use client";
-import React, { use } from 'react';
-import IconWeb from '../../../public/IconRemoverBg.png'
+import React from 'react';
 import Image from 'next/image'
 import { FaTasks } from "react-icons/fa";
 import { MdOutlineAccountCircle } from "react-icons/md";
+import IconWeb from '../../../public/IconRemoverBg.png'
 import { LuHistory } from "react-icons/lu";
 import { IoMdAdd } from "react-icons/io";
 import { useState, useEffect } from 'react';
@@ -49,10 +49,10 @@ const Sidebar: React.FunctionComponent = () => {
     <div className="flex min-h-screen bg-gray-100">
       <aside className="w-64 bg-gray-900 text-white flex flex-col border-r border-gray-700">
         <div className='flex justify-start p-5'>
-          <Image src={IconWeb} alt='' className='w-11 me-2' />
+        <Image src={IconWeb} alt='' className='w-11 me-2' />
           <p className='font-bold text-lg'>TodoPlus</p>
         </div>
-        <hr className="border-gray-700" />
+        <hr className="border-gray-700 pb-2" />
         <nav className="flex-1 px-2">
           <ul className="space-y-2">
             <li>
