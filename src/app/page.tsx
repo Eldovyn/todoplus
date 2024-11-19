@@ -79,6 +79,24 @@ const Home: React.FunctionComponent = () => {
             </button>
           </div>
         </form>
+        <br />
+        <hr className="w-[80rem] mx-auto"/>
+        <br />
+        <div className="border rounded-lg shadow p-4 text-white w-[80rem] mx-auto m-5 bg-gray-900">
+          <div className="p-4">
+            This is some text within a card body.
+          </div>
+        </div>
+        <div className="border rounded-lg shadow p-4 text-white w-[80rem] mx-auto m-5 bg-gray-900">
+          <div className="p-4">
+            This is some text within a card body.
+          </div>
+        </div>
+        <div className="border rounded-lg shadow p-4 text-white w-[80rem] mx-auto m-5 bg-gray-900">
+          <div className="p-4">
+            This is some text within a card body.
+          </div>
+        </div>
       </div>
     </>
   );
