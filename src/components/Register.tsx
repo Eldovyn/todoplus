@@ -24,7 +24,7 @@ const RegisterForm: React.FunctionComponent = () => {
                 </div>
                 <button
                     type="submit"
-                    className="px-4 py-2 bg-black text-white font-semibold rounded-md shadow-md hover:bg-black focus:outline-none focus:ring-2 focus:bg-black focus:ring-opacity-50 w-full"
+                    className="px-4 py-2 bg-gray-900 text-white font-semibold rounded-md shadow-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:bg-gray-900 focus:ring-opacity-50 w-full"
                 >
                     Register
                 </button>
