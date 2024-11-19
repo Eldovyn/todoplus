@@ -62,7 +62,7 @@ const Home: React.FunctionComponent = () => {
           </div>
         </div>
       </nav>
-      <div className="mx-auto px-4 bg-whiteh-screen w-full">
+      <div className="mx-auto px-4 w-full">
         <p className="text-black font-bold text-3xl text-center pt-[10rem]">Apa Rencanamu Hari Ini ?</p>
         <form className="mb-3 mt-3 flex justify-center items-center">
           <div className="flex items-center w-[50rem]">
@@ -80,22 +80,28 @@ const Home: React.FunctionComponent = () => {
           </div>
         </form>
         <br />
-        <hr className="w-[80%] mx-auto"/>
+        <hr className="w-[45%] mx-auto" />
         <br />
-        <div className="border rounded-lg shadow p-4 text-white w-[80%] mx-auto m-5 bg-gray-900">
+        <div className="border rounded-lg shadow p-4 text-white w-[45%] mx-auto m-5 bg-gray-900">
           <div className="p-4">
             This is some text within a card body.
           </div>
         </div>
-        <div className="border rounded-lg shadow p-4 text-white w-[80%] mx-auto m-5 bg-gray-900">
+        <div className="border rounded-lg shadow p-4 text-white w-[45%] mx-auto m-5 bg-gray-900">
           <div className="p-4">
             This is some text within a card body.
           </div>
         </div>
-        <div className="border rounded-lg shadow p-4 text-white w-[80%] mx-auto m-5 bg-gray-900">
+        <div className="border rounded-lg shadow p-4 text-white w-[45%] mx-auto m-5 bg-gray-900">
           <div className="p-4">
             This is some text within a card body.
           </div>
+        </div>
+      </div>
+      <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-[44.3%] text-center rounded-md bg-gray-900 text-white p-4 mb-3">
+        <div className="flex flex-row items-center justify-center">
+          <div className="font-semibold">© 2024</div>
+          <div className="ms-2">Created By Eldovyn</div>
         </div>
       </div>
     </>
