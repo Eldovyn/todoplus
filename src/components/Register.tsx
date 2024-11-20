@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { IoEyeOutline } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa";
 import { toast } from 'react-toastify';
@@ -26,8 +26,12 @@ const RegisterForm: React.FunctionComponent = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
+    useEffect(() => {
+        setLoading(false);
+    }, []);
+
     const userRegister = async (email: string, username: string, password: string, confirmPassword: string) => {
-        let response = await fetch('http://127.0.0.1:5000/todoplus/register', {
+        let response = await fetch('http://localhost:5000/todoplus/register', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { IoEyeOutline } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa";
@@ -18,6 +18,10 @@ const LoginForm: React.FunctionComponent = () => {
     const [emailErrorMessage, setEmailErrorMessage] = useState('');
     const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
 
+    useEffect(() => {
+        setLoading(false);
+    }, []);
+
     const alertSuccess = async (message: string) => {
         toast.success(message, {
             position: "bottom-right",
@@ -31,7 +35,7 @@ const LoginForm: React.FunctionComponent = () => {
     };
 
     const userLogin = async (email: string, password: string) => {
-        let response = await fetch('http://127.0.0.1:5000/todoplus/login', {
+        let response = await fetch('http://localhost:5000/todoplus/login', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
