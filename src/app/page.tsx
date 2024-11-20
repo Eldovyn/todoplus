@@ -74,10 +74,10 @@ const Home: React.FunctionComponent = () => {
             <input
               type="text"
               placeholder="Tulis Disini ..."
-              className="flex-1 px-4 py-2 text-gray-800 placeholder-gray-600 bg-teal-400 rounded-l-lg focus:outline-none focus:ring-2 focus:ring-teal-500 h-12"
+              className="flex-1 px-4 py-2 text-white placeholder-white bg-[#1d4ed8] rounded-l-lg focus:outline-none focus:ring-2 focus:ring-gray-400 h-12"
             />
             <button
-              className="flex items-center justify-center px-4 bg-teal-600 text-white rounded-r-lg hover:bg-teal-700 transition h-12"
+              className="flex items-center justify-center px-4 bg-gray-900 text-white rounded-r-lg hover:bg-gray-800 transition h-12"
               aria-label="Add"
             >
               <IoAdd className="text-xl" />
