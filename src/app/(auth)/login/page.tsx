@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image'
-import IconWeb from '../../../public/IconRemoverBg.png'
+import IconWeb from '../../../../public/IconRemoverBg.png'
 import LoginForm from '@/components/Login';
 
 const LoginPage: React.FunctionComponent = () => {

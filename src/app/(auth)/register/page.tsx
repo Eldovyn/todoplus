@@ -1,6 +1,6 @@
 import React from "react";
 import Image from 'next/image'
-import IconWeb from '../../../public/IconRemoverBg.png'
+import IconWeb from '../../../../public/IconRemoverBg.png'
 import RegisterForm from "@/components/Register";
 
 const RegisterPage: React.FunctionComponent = () => {
