@@ -1,7 +1,10 @@
+'use client';
 import React from "react";
 import Image from 'next/image'
 import IconWeb from '../../../../public/IconRemoverBg.png'
 import RegisterForm from "@/components/Register";
+import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const RegisterPage: React.FunctionComponent = () => {
     return (
@@ -21,6 +24,7 @@ const RegisterPage: React.FunctionComponent = () => {
                     <p className='font-bold text-center text-lg'>Welcome Back</p>
                     <p className='text-center text-sm pt-1'>Enter Your Account Details</p>
                     <RegisterForm />
+                    <ToastContainer />
                 </span>
             </div>
         </>

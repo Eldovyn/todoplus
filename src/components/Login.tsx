@@ -125,7 +125,7 @@ const LoginForm: React.FunctionComponent = () => {
                     >
                         {showPassword ? <IoEyeOutline className={`${passwordError ? "text-red-500" : "text-gray-600"}`}/> : <FaRegEyeSlash className={`${passwordError ? "text-red-500" : "text-gray-600"}`} />}
                     </button>
-                    {passwordError && passwordErrorMessage && <p className="text-red-500 text-xs mt-1">{passwordErrorMessage}</p>}
+                    {passwordError && <p className="text-red-500 text-xs mt-1">{passwordErrorMessage}</p>}
                 </div>
                 <a href="http://localhost:3000/register">
                     <p className='underline font-semibold text-sm mb-3 text-right'>Forget Password</p>
