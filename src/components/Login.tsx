@@ -1,14 +1,22 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
 import { IoEyeOutline } from "react-icons/io5";
-import { FaEyeSlash } from "react-icons/fa";
+import { FaRegEyeSlash } from "react-icons/fa";
 import LoadingSpinnerComponent from 'react-spinners-components';
+import { redirect } from 'next/navigation';
+import Cookies from 'js-cookie';
 
 const LoginForm: React.FunctionComponent = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
     const [loading, setLoading] = useState(false);
+
+    const [emailError, setEmailError] = useState(false);
+    const [passwordError, setPasswordError] = useState(false);
+
+    const [emailErrorMessage, setEmailErrorMessage] = useState('');
+    const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
 
     const alertSuccess = async (message: string) => {
         toast.success(message, {
@@ -33,70 +41,91 @@ const LoginForm: React.FunctionComponent = () => {
                 password: password,
             }),
         });
-        return response
+        return response;
     };
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         setLoading(true);
         e.preventDefault();
-        if (!email || !password) {
-            if (email.trim().length === 0 && password.trim().length > 0) {
-                await alertFailed("email cannot be empty");
-                setLoading(false);
-                return
-            }
-            if (password.trim().length === 0 && email.trim().length > 0) {  
-                await alertFailed("password cannot be empty");
-                setLoading(false);
-                return
-            }
-            await alertFailed("email and password cannot be empty");
-            setLoading(false);
-            return
-        }
         const api_login = await userLogin(email, password);
         let data = await api_login.json();
+        if (api_login.status === 400) {
+            if (data.errors) {
+                setEmailError(false);
+                setPasswordError(false);
+                if (data.errors.email && data.errors.email[0]) {
+                    setEmailError(true);
+                    if (typeof data.errors.email === 'object') {
+                        setEmailErrorMessage(data.errors.email[0]);
+                    } else {
+                        setEmailErrorMessage(data.errors.email);
+                    }
+                }
+                if (data.errors.password && data.errors.password[0]) {
+                    setPasswordError(true);
+                    if (typeof data.errors.password === 'object') {
+                        setPasswordErrorMessage(data.errors.password[0]);
+                    } else {
+                        setPasswordErrorMessage(data.errors.password);
+                    }
+                }
+            }
+            setLoading(false);
+            await alertFailed(data.message);
+            return;
+        }        
         if (api_login.status !== 201) {
             await alertFailed(data.message);
             setLoading(false);
-            return
+            setEmailError(false);
+            setPasswordError(false);
+            return;
         }
         await alertSuccess(data.message);
         setLoading(false);
-        return
+        setEmailError(false);
+        setPasswordError(false);
+        setPasswordErrorMessage('');
+        setEmailErrorMessage('');
+        setEmail('');
+        setPassword('');
+        Cookies.set('accessToken', data.data.access_token);
+        redirect('/');
     };
 
     return (
         <>
-            <form onSubmit={loading ? () => {} : handleLogin} className='pt-2'>
+            <form onSubmit={loading ? () => { } : handleLogin} className='pt-2'>
                 <div className="mb-3">
                     <input
                         type="email"
                         id="exampleInputEmail1"
-                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        className={`mt-1 block w-full px-3 py-2 border ${emailError ? "focus:ring-red-500 focus:border-red-500 border-red-500" : "border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"} rounded-md shadow-sm focus:outline-none focus:ring-2 sm:text-sm`}
                         placeholder="Email Address"
                         aria-describedby="emailHelp"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                     />
+                    {emailError && <p className="text-red-500 text-xs mt-1">{emailErrorMessage}</p>}
                 </div>
                 <div className="mb-3 relative">
                     <input
                         type={showPassword ? "text" : "password"}
                         id="exampleInputPassword"
-                        className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm"
+                        className={`mt-1 block w-full px-3 py-2 border ${passwordError ? "focus:ring-red-500 focus:border-red-500 border-red-500" : "border-gray-300 focus:ring-indigo-500 focus:border-indigo-500"} rounded-md shadow-sm focus:outline-none focus:ring-2 sm:text-sm`}
                         placeholder="Password"
-                        aria-describedby="emailHelp"
+                        aria-describedby="passwordHelp"
                         value={password}
                         onChange={(e) => setPassword(e.target.value)}
                     />
                     <button
                         type="button"
-                        className="absolute inset-y-0 right-0 px-4 text-gray-600 focus:outline-none"
+                        className={`absolute inset-y-0 right-0 px-4 text-gray-600 focus:outline-none ${passwordError ? 'pb-4' : ''}`}
                         onClick={() => setShowPassword(!showPassword)}
                     >
-                        {showPassword ? <IoEyeOutline /> : <FaEyeSlash />}
+                        {showPassword ? <IoEyeOutline className={`${passwordError ? "text-red-500" : "text-gray-600"}`}/> : <FaRegEyeSlash className={`${passwordError ? "text-red-500" : "text-gray-600"}`} />}
                     </button>
+                    {passwordError && passwordErrorMessage && <p className="text-red-500 text-xs mt-1">{passwordErrorMessage}</p>}
                 </div>
                 <a href="http://localhost:3000/register">
                     <p className='underline font-semibold text-sm mb-3 text-right'>Forget Password</p>
@@ -105,11 +134,11 @@ const LoginForm: React.FunctionComponent = () => {
                     type="submit"
                     className="px-4 py-2 bg-gray-900 text-white font-semibold rounded-md shadow-md hover:bg-gray-900 focus:outline-none focus:ring-2 focus:bg-gray-900 focus:ring-opacity-50 w-full"
                 >
-                    {loading ? <LoadingSpinnerComponent type={ 'Spinner' } color={ 'white' } size={ '20px' } /> : "Login"}
+                    {loading ? <LoadingSpinnerComponent type={'Spinner'} color={'white'} size={'20px'} /> : "Login"}
                 </button>
             </form>
         </>
-    )
+    );
 }
 
-export default LoginForm
+export default LoginForm;
