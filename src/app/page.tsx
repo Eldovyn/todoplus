@@ -4,6 +4,8 @@ import { IoMdAddCircle } from "react-icons/io";
 import { MdOutlineHistoryToggleOff } from "react-icons/md";
 import { MdAccountCircle } from "react-icons/md";
 import { IoAdd } from 'react-icons/io5';
+import Image from "next/image";
+import IconWeb from "../../public/IconRemoverBg.png";
 
 const Home: React.FunctionComponent = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -12,7 +14,10 @@ const Home: React.FunctionComponent = () => {
     <>
       <nav className="relative bg-gray-900 p-4">
         <div className="container mx-auto flex justify-between items-center">
-          <a className="text-white text-lg font-bold" href="#">Navbar</a>
+          <div className="flex items-center gap-2 overflow-visible">
+            <Image src={IconWeb} alt="" className="w-10" />
+            <p className="font-bold text-md text-white min-w-[6rem]">TodoPlus</p>
+          </div>
           <button
             className="text-white focus:outline-none md:hidden"
             onClick={() => setIsOpen(!isOpen)}
