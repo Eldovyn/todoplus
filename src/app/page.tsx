@@ -12,12 +12,46 @@ import { MdEdit } from "react-icons/md";
 import Cookies from 'js-cookie';
 import LoadingSpinnerComponent from 'react-spinners-components';
 import Dropdown from "@/components/ui/Dropdown";
+import { toast } from 'react-toastify';
 
 const Home: React.FunctionComponent = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const [listTask, setListTask] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
+
+  const alertSuccess = async (message: string) => {
+    toast.success(message, {
+      position: "bottom-right",
+    });
+  };
+
+  const alertFailed = async (message: string) => {
+    toast.error(message, {
+      position: "bottom-right",
+    });
+  };
+
+  const handleRemoveListTask = (id: string) => {
+    const apiRemoveTask = async () => {
+      let response = await fetch(`http://localhost:5000/todoplus/task?id=${id}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${Cookies.get('accessToken')}`,
+        },
+      })
+      let resp = await response.json();
+      if (response.status !== 201) {
+        await alertFailed(resp.message)
+        return
+      }
+      await alertSuccess(resp.message)
+      setListTask(listTask.filter((item) => item.id !== id));
+      return
+    }
+    apiRemoveTask()
+  }
 
   useEffect(() => {
     setLoading(true);
@@ -30,7 +64,9 @@ const Home: React.FunctionComponent = () => {
         },
       })
       let resp = await response.json();
-      setListTask(resp.data);
+      if (response.status === 200) {
+        setListTask(resp.data);
+      }
       setLoading(false);
     }
     fetchData();
@@ -103,9 +139,9 @@ const Home: React.FunctionComponent = () => {
                 <div className="p-1 flex justify-between items-center">
                   <p className="text-sm">{item.title}</p>
                   <div className="flex flex-row items-center">
-                    <FaTrash size={18} className="m-1" />
-                    <MdEdit size={18} className="m-1" />
-                    <input className="m-1 form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out" type="checkbox" id="flexCheckDefault" />
+                    <FaTrash size={18} className="m-1 cursor-pointer" onClick={() => handleRemoveListTask(item.id)} />
+                    <MdEdit size={18} className="m-1 cursor-pointer" />
+                    <input className="cursor-pointer m-1 form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out" type="checkbox" id="flexCheckDefault" />
                   </div>
                 </div>
               </div>
