@@ -8,6 +8,7 @@ import IconWeb from "../../public/IconRemoverBg.png";
 import AddTask from "@/components/AddTask";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from 'react-toastify';
+import { MdEdit } from "react-icons/md";
 import Cookies from 'js-cookie';
 import LoadingSpinnerComponent from 'react-spinners-components';
 import Dropdown from "@/components/ui/Dropdown";
@@ -91,20 +92,24 @@ const Home: React.FunctionComponent = () => {
       </nav>
       <div className="mx-auto px-4 w-full text-center">
         <p className="text-black font-bold text-3xl text-center pt-[10rem]">Apa Rencanamu Hari Ini ?</p>
-        <AddTask listTask={listTask} setListTask={setListTask}/>
+        <AddTask listTask={listTask} setListTask={setListTask} />
         <br />
         <hr className="w-[60%] mx-auto" />
         <br />
         {
           loading ? <LoadingSpinnerComponent type={'Spinner'} color={'black'} size={'50px'} /> :
-          listTask.map((item: any) => (
-            <div key={item.id} className="border rounded-lg shadow p-4 text-white w-[60%] mx-auto m-5 bg-gray-900">
-              <div className="p-1">
-                <p className="text-sm">{item.title}</p>
-                <p className="text-sm text-gray-400">{item.description}</p>
+            listTask.map((item: any) => (
+              <div key={item.id} className="border rounded-lg shadow p-4 text-white w-[60%] mx-auto m-5 bg-gray-900">
+                <div className="p-1 flex justify-between items-center">
+                  <p className="text-sm">{item.title}</p>
+                  <div className="flex flex-row items-center">
+                    <FaTrash size={18} className="m-1" />
+                    <MdEdit size={18} className="m-1" />
+                    <input className="m-1 form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out" type="checkbox" id="flexCheckDefault" />
+                  </div>
+                </div>
               </div>
-            </div>
-          ))
+            ))
         }
       </div>
       <ToastContainer />
