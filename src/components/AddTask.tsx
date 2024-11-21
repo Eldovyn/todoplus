@@ -1,31 +1,108 @@
-import React from "react";
-import { IoMdAddCircle } from "react-icons/io";
-import { FaTasks } from "react-icons/fa";
-import { FaHistory } from "react-icons/fa";
+import React, { useEffect, useState } from "react";
+import { IoAdd } from 'react-icons/io5';
+import { toast } from 'react-toastify';
+import Cookies from 'js-cookie';
+import { redirect } from 'next/navigation';
+import { Dispatch, SetStateAction } from 'react';
 
-const AddTask: React.FunctionComponent = () => {
+interface AddTaskProps {
+    listTask: any[];
+    setListTask: Dispatch<SetStateAction<any[]>>;
+}
+
+const AddTask: React.FunctionComponent<AddTaskProps> = ({ listTask, setListTask }) => {
+    const [title, setTitle] = useState("");
+
+    const [loading, setLoading] = useState(false);
+
+    const [titleError, setTitleError] = useState(false);
+
+    const [token, setToken] = useState('');
+
+    useEffect(() => {
+        const accessToken = Cookies.get('accessToken');
+        setToken(accessToken ?? '');
+    }, []);
+
+    const alertSuccess = async (message: string) => {
+        toast.success(message, {
+            position: "bottom-right",
+        });
+    };
+
+    const alertFailed = async (message: string) => {
+        toast.error(message, {
+            position: "bottom-right",
+        });
+    };
+
+    const userTask = async () => {
+        let response = await fetch('http://localhost:5000/todoplus/task', {
+            method: 'POST',
+            headers: {
+                'Authorization': 'Bearer ' + token,
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                title: title
+            }),
+        });
+        return response;
+    };
+
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setLoading(true);
+        const api_task = await userTask();
+        let data = await api_task.json();
+        if (api_task.status !== 201) {
+            setTitleError(false);
+            if (data.errors && data.errors.title) {
+                setTitleError(true);
+                await alertFailed(data.message);
+                setLoading(false);
+                return;
+            }
+            if (api_task.status === 401) {
+                await alertFailed(data.message);
+                setLoading(false);
+                Cookies.remove('accessToken');
+                redirect('/');
+            }
+            await alertFailed(data.message);
+            setLoading(false);
+            return;
+        }
+        await alertSuccess(data.message);
+        setTitleError(false);
+        setTitle('');
+        setListTask([...listTask, data.data]);
+        setLoading(false);
+        return;
+    };
+
     return (
         <>
-            <div className="h-screen mx-auto w-full bg-white">
-                <div className="flex flex-row-reverse w-full bg-gray-900 p-[1.52rem]">
-                    <IoMdAddCircle className="text-white me-2 ms-2" size={20} />
-                    <FaTasks className="text-white me-2 ms-2" size={20} />
-                    <FaHistory className="text-white me-2 ms-2" size={20} />
+            <form className="mb-3 mt-3 flex justify-center items-center" onSubmit={loading ? () => { } : handleSubmit}>
+                <div className="flex flex-col mb-3 w-[60%]">
+                    <div className="flex items-center">
+                        <input
+                            onChange={(e) => setTitle(e.target.value)}
+                            value={title}
+                            type="text"
+                            placeholder="Tulis Disini ..."
+                            className={`flex-1 px-4 py-2 text-white placeholder-white bg-[#1d4ed8] rounded-l-lg focus:outline-none focus:ring-2 focus:ring-gray-400 h-12`}
+                        />
+                        <button
+                            className="flex items-center justify-center px-4 bg-gray-900 text-white rounded-r-lg hover:bg-gray-800 transition h-12"
+                            aria-label="Add"
+                            type="submit"
+                        >
+                            <IoAdd className="text-xl" />
+                        </button>
+                    </div>
                 </div>
-                <div className="border rounded-md p-4 bg-gray-900 w-[60%] mx-auto flex justify-center items-center mt-[17rem] text-white">
-                    <form className="w-full mx-auto p-4">
-                        <div className="mb-3">
-                            <input type="text" placeholder="Task" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black" id="email" aria-describedby="emailHelp" />
-                        </div>
-                        <div className="mb-3">
-                            <input type="text" placeholder="Description" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm text-black" id="password" />
-                        </div>
-                        <div className="flex justify-end">
-                            <button type="submit" className="w-[8rem] inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">Submit</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+            </form>
         </>
     );
 };

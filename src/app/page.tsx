@@ -1,14 +1,34 @@
 'use client';
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IoMdAddCircle } from "react-icons/io";
 import { MdOutlineHistoryToggleOff } from "react-icons/md";
 import { MdAccountCircle } from "react-icons/md";
-import { IoAdd } from 'react-icons/io5';
 import Image from "next/image";
 import IconWeb from "../../public/IconRemoverBg.png";
+import AddTask from "@/components/AddTask";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from 'react-toastify';
+import Cookies from 'js-cookie';
 
 const Home: React.FunctionComponent = () => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const [listTask, setListTask] = useState<any[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      const accessToken = Cookies.get('accessToken');
+      let response = await fetch('http://localhost:5000/todoplus/task', {
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${accessToken}`,
+        },
+      })
+      let resp = await response.json();
+      setListTask(resp.data);
+    }
+    fetchData();
+  }, []);
 
   return (
     <>
@@ -67,48 +87,24 @@ const Home: React.FunctionComponent = () => {
           </div>
         </div>
       </nav>
-      <div className="mx-auto px-4 w-full">
+      <div className="mx-auto px-4 w-full text-center">
         <p className="text-black font-bold text-3xl text-center pt-[10rem]">Apa Rencanamu Hari Ini ?</p>
-        <form className="mb-3 mt-3 flex justify-center items-center">
-          <div className="flex items-center w-[50rem]">
-            <input
-              type="text"
-              placeholder="Tulis Disini ..."
-              className="flex-1 px-4 py-2 text-white placeholder-white bg-[#1d4ed8] rounded-l-lg focus:outline-none focus:ring-2 focus:ring-gray-400 h-12"
-            />
-            <button
-              className="flex items-center justify-center px-4 bg-gray-900 text-white rounded-r-lg hover:bg-gray-800 transition h-12"
-              aria-label="Add"
-            >
-              <IoAdd className="text-xl" />
-            </button>
-          </div>
-        </form>
+        <AddTask listTask={listTask} setListTask={setListTask}/>
         <br />
-        <hr className="w-[45%] mx-auto" />
+        <hr className="w-[60%] mx-auto" />
         <br />
-        <div className="border rounded-lg shadow p-4 text-white w-[45%] mx-auto m-5 bg-gray-900">
-          <div className="p-4">
-            This is some text within a card body.
-          </div>
-        </div>
-        <div className="border rounded-lg shadow p-4 text-white w-[45%] mx-auto m-5 bg-gray-900">
-          <div className="p-4">
-            This is some text within a card body.
-          </div>
-        </div>
-        <div className="border rounded-lg shadow p-4 text-white w-[45%] mx-auto m-5 bg-gray-900">
-          <div className="p-4">
-            This is some text within a card body.
-          </div>
-        </div>
+        {
+          listTask.map((item: any) => (
+            <div key={item.id} className="border rounded-lg shadow p-4 text-white w-[60%] mx-auto m-5 bg-gray-900">
+              <div className="p-1">
+                <p className="text-sm">{item.title}</p>
+                <p className="text-sm text-gray-400">{item.description}</p>
+              </div>
+            </div>
+          ))
+        }
       </div>
-      <div className="fixed bottom-0 left-1/2 transform -translate-x-1/2 w-[44.3%] text-center rounded-md bg-gray-900 text-white p-4 mb-3">
-        <div className="flex flex-row items-center justify-center">
-          <div className="font-semibold">© 2024</div>
-          <div className="ms-2">Created By Eldovyn</div>
-        </div>
-      </div>
+      <ToastContainer />
     </>
   );
 };
