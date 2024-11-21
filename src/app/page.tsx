@@ -134,9 +134,7 @@ const Home: React.FunctionComponent = () => {
       <div className="mx-auto px-4 w-full text-center">
         <p className="text-black font-bold text-3xl text-center pt-[6rem]">Apa Rencanamu Hari Ini ?</p>
         <AddTask listTask={listTask} setListTask={setListTask} />
-        <br />
-        <hr className="w-[60%] mx-auto" />
-        <br />
+        {listTask.length > 0 && (<> <br /> <hr className="w-[60%] mx-auto" /> <br /> </>)}
         {
           loading ? <LoadingSpinnerComponent type={'Spinner'} color={'black'} size={'50px'} /> :
             listTask.slice(0, 5).map((item: any) => (
