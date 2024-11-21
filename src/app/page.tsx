@@ -2,20 +2,24 @@
 import React, { useState, useEffect } from "react";
 import { IoMdAddCircle } from "react-icons/io";
 import { MdOutlineHistoryToggleOff } from "react-icons/md";
-import { MdAccountCircle } from "react-icons/md";
+import { FaTrash } from "react-icons/fa";
 import Image from "next/image";
 import IconWeb from "../../public/IconRemoverBg.png";
 import AddTask from "@/components/AddTask";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from 'react-toastify';
 import Cookies from 'js-cookie';
+import LoadingSpinnerComponent from 'react-spinners-components';
+import Dropdown from "@/components/ui/Dropdown";
 
 const Home: React.FunctionComponent = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   const [listTask, setListTask] = useState<any[]>([]);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    setLoading(true);
     const fetchData = async () => {
       const accessToken = Cookies.get('accessToken');
       let response = await fetch('http://localhost:5000/todoplus/task', {
@@ -26,6 +30,7 @@ const Home: React.FunctionComponent = () => {
       })
       let resp = await response.json();
       setListTask(resp.data);
+      setLoading(false);
     }
     fetchData();
   }, []);
@@ -78,10 +83,7 @@ const Home: React.FunctionComponent = () => {
                 </div>
               </li>
               <li className="nav-item">
-                <div className="flex flex-row text-white items-center cursor-pointer">
-                  <MdAccountCircle size={25} />
-                  <div className="me-1 ms-1">Account</div>
-                </div>
+                <Dropdown />
               </li>
             </ul>
           </div>
@@ -94,6 +96,7 @@ const Home: React.FunctionComponent = () => {
         <hr className="w-[60%] mx-auto" />
         <br />
         {
+          loading ? <LoadingSpinnerComponent type={'Spinner'} color={'black'} size={'50px'} /> :
           listTask.map((item: any) => (
             <div key={item.id} className="border rounded-lg shadow p-4 text-white w-[60%] mx-auto m-5 bg-gray-900">
               <div className="p-1">
