@@ -13,6 +13,7 @@ import Cookies from 'js-cookie';
 import LoadingSpinnerComponent from 'react-spinners-components';
 import Dropdown from "@/components/ui/Dropdown";
 import { toast } from 'react-toastify';
+import Modal from "@/components/ui/Modal";
 
 const Home: React.FunctionComponent = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -21,6 +22,13 @@ const Home: React.FunctionComponent = () => {
   const [loading, setLoading] = useState(false);
 
   const [loadingRemove, setLoadingRemove] = useState(false);
+
+  const [loadingUpdate, setLoadingUpdate] = useState(false);
+
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
 
   const alertSuccess = async (message: string) => {
     toast.success(message, {
@@ -34,15 +42,48 @@ const Home: React.FunctionComponent = () => {
     });
   };
 
+  const handleUpdateIsCompleted = (id: string, isCompleted: boolean) => {
+    setLoadingUpdate(true);
+    const apiUpdateTask = async () => {
+      let response = await fetch('http://127.0.0.1:5000/todoplus/task/is_completed', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${Cookies.get('accessToken')}`,
+        },
+        body: JSON.stringify({
+          id: id,
+          status: !isCompleted,
+          limit: 5
+        }),
+      })
+      let resp = await response.json();
+      if (response.status !== 201) {
+        await alertFailed(resp.message)
+        setLoadingUpdate(false);
+        return
+      }
+      await alertSuccess(resp.message)
+      setListTask(resp.new_task);
+      setLoadingUpdate(false);
+      return
+    }
+    apiUpdateTask()
+  }
+
   const handleRemoveListTask = (id: string) => {
     setLoadingRemove(true);
     const apiRemoveTask = async () => {
-      let response = await fetch(`http://localhost:5000/todoplus/task?id=${id}`, {
+      let response = await fetch('http://127.0.0.1:5000/todoplus/task/id', {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${Cookies.get('accessToken')}`,
         },
+        body: JSON.stringify({
+          id: id,
+          limit: 5
+        }),
       })
       let resp = await response.json();
       if (response.status !== 201) {
@@ -62,7 +103,8 @@ const Home: React.FunctionComponent = () => {
     setLoading(true);
     const fetchData = async () => {
       const accessToken = Cookies.get('accessToken');
-      let response = await fetch(`http://localhost:5000/todoplus/task?limit=${5}`, {
+      let response = await fetch(`http://localhost:5000/todoplus/task/all?limit=5`, {
+        method: 'GET',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${accessToken}`,
@@ -140,11 +182,12 @@ const Home: React.FunctionComponent = () => {
             listTask.slice(0, 5).map((item: any) => (
               <div key={item.id} className="border rounded-lg shadow p-4 text-white w-[60%] mx-auto m-5 bg-gray-900">
                 <div className="p-1 flex justify-between items-center">
-                  <p className="text-sm">{item.title}</p>
+                  <p className={`text-sm ${item.is_completed ? 'line-through' : ''}`}>{item.title}</p>
                   <div className="flex flex-row items-center">
                     <FaTrash size={18} className="m-1 cursor-pointer" onClick={loadingRemove ? () => { } : () => handleRemoveListTask(item.id)} />
-                    <MdEdit size={18} className="m-1 cursor-pointer" />
-                    <input className="cursor-pointer m-1 form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out" type="checkbox" id="flexCheckDefault" />
+                    <MdEdit size={18} className="m-1 cursor-pointer" onClick={openModal}/>
+                    <input className="cursor-pointer m-1 form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out" type="checkbox" checked={item.is_completed} id="flexCheckDefault" onChange={loadingUpdate ? () => { } : () => handleUpdateIsCompleted(item.id, item.is_completed)} />
+                    <Modal isOpen={isModalOpen} onClose={closeModal} />
                   </div>
                 </div>
               </div>
