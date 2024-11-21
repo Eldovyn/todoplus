@@ -20,6 +20,8 @@ const Home: React.FunctionComponent = () => {
   const [listTask, setListTask] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
 
+  const [loadingRemove, setLoadingRemove] = useState(false);
+
   const alertSuccess = async (message: string) => {
     toast.success(message, {
       position: "bottom-right",
@@ -33,6 +35,7 @@ const Home: React.FunctionComponent = () => {
   };
 
   const handleRemoveListTask = (id: string) => {
+    setLoadingRemove(true);
     const apiRemoveTask = async () => {
       let response = await fetch(`http://localhost:5000/todoplus/task?id=${id}`, {
         method: 'DELETE',
@@ -44,10 +47,12 @@ const Home: React.FunctionComponent = () => {
       let resp = await response.json();
       if (response.status !== 201) {
         await alertFailed(resp.message)
+        setLoadingRemove(false);
         return
       }
       await alertSuccess(resp.message)
       setListTask(listTask.filter((item) => item.id !== id));
+      setLoadingRemove(false);
       return
     }
     apiRemoveTask()
@@ -139,7 +144,7 @@ const Home: React.FunctionComponent = () => {
                 <div className="p-1 flex justify-between items-center">
                   <p className="text-sm">{item.title}</p>
                   <div className="flex flex-row items-center">
-                    <FaTrash size={18} className="m-1 cursor-pointer" onClick={() => handleRemoveListTask(item.id)} />
+                    <FaTrash size={18} className="m-1 cursor-pointer" onClick={loadingRemove ? () => { } : () => handleRemoveListTask(item.id)} />
                     <MdEdit size={18} className="m-1 cursor-pointer" />
                     <input className="cursor-pointer m-1 form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out" type="checkbox" id="flexCheckDefault" />
                   </div>
