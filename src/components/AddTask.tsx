@@ -37,7 +37,7 @@ const AddTask: React.FunctionComponent<AddTaskProps> = ({ listTask, setListTask 
     };
 
     const userTask = async () => {
-        let response = await fetch('http://localhost:5000/todoplus/task', {
+        let response = await fetch('http://localhost:5000/todoplus/task?limit=5', {
             method: 'POST',
             headers: {
                 'Authorization': 'Bearer ' + token,
@@ -76,7 +76,7 @@ const AddTask: React.FunctionComponent<AddTaskProps> = ({ listTask, setListTask 
         await alertSuccess(data.message);
         setTitleError(false);
         setTitle('');
-        setListTask([...listTask, data.data]);
+        setListTask(data.new_task);
         setLoading(false);
         return;
     };

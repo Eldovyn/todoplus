@@ -51,7 +51,7 @@ const Home: React.FunctionComponent = () => {
         return
       }
       await alertSuccess(resp.message)
-      setListTask(listTask.filter((item) => item.id !== id));
+      setListTask(resp.new_task);
       setLoadingRemove(false);
       return
     }
@@ -62,7 +62,7 @@ const Home: React.FunctionComponent = () => {
     setLoading(true);
     const fetchData = async () => {
       const accessToken = Cookies.get('accessToken');
-      let response = await fetch('http://localhost:5000/todoplus/task', {
+      let response = await fetch(`http://localhost:5000/todoplus/task?limit=${5}`, {
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${accessToken}`,
@@ -132,14 +132,14 @@ const Home: React.FunctionComponent = () => {
         </div>
       </nav>
       <div className="mx-auto px-4 w-full text-center">
-        <p className="text-black font-bold text-3xl text-center pt-[10rem]">Apa Rencanamu Hari Ini ?</p>
+        <p className="text-black font-bold text-3xl text-center pt-[6rem]">Apa Rencanamu Hari Ini ?</p>
         <AddTask listTask={listTask} setListTask={setListTask} />
         <br />
         <hr className="w-[60%] mx-auto" />
         <br />
         {
           loading ? <LoadingSpinnerComponent type={'Spinner'} color={'black'} size={'50px'} /> :
-            listTask.map((item: any) => (
+            listTask.slice(0, 5).map((item: any) => (
               <div key={item.id} className="border rounded-lg shadow p-4 text-white w-[60%] mx-auto m-5 bg-gray-900">
                 <div className="p-1 flex justify-between items-center">
                   <p className="text-sm">{item.title}</p>
