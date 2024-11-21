@@ -41,10 +41,10 @@ const Dropdown = () => {
                             <MdAccountCircle size={25} color='#374151' />
                             <div className="pl-1 text-gray-700">Account</div>
                         </div>
-                        <button onClick={handleLogout} className="flex flex-row text-white items-center cursor-pointer ms-2 text-sm m-1">
+                        <div onClick={handleLogout} className="flex flex-row text-white items-center cursor-pointer ms-2 text-sm m-1">
                             <IoIosLogOut size={25} color='#374151' />
                             <div className="pl-1 text-gray-700">Logout</div>
-                        </button>
+                        </div>
                     </div>
                 </div>
             )}
