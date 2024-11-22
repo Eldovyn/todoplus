@@ -64,8 +64,6 @@ const FormPassword: React.FC = () => {
                         {passwordVisible ? <FaEyeSlash /> : <FaEye />}
                     </span>
                 </div>
-                {passwordError && <p className="text-red-500 text-sm pt-1">Password error message here</p>}
-                
                 <p className="text-left text-sm pt-5 text-gray-300 pb-1">Konfirmasi Password</p>
                 <div className="relative">
                     <input
@@ -80,8 +78,6 @@ const FormPassword: React.FC = () => {
                         {confirmPasswordVisible ? <FaEyeSlash /> : <FaEye />}
                     </span>
                 </div>
-                {confirmPasswordError && <p className="text-red-500 text-sm pt-1">Confirm password error message here</p>}
-
                 <button type="submit" className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-md">
                     {loading ? <LoadingSpinnerComponent type={'Spinner'} color={'white'} size={'20px'} /> : "Submit Password"}
                 </button>
