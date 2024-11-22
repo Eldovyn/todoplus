@@ -5,6 +5,8 @@ import { FaAddressCard } from "react-icons/fa6";
 import { FaKey } from "react-icons/fa6";
 import FormProfile from "@/components/FormProfile";
 import FormPassword from "@/components/FormPassword";
+import { ToastContainer } from 'react-toastify';
+import "react-toastify/dist/ReactToastify.css";
 
 const Profile: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -30,6 +32,7 @@ const Profile: React.FC = () => {
                     <FormPassword />
                 </div>
             </div>
+            <ToastContainer />
         </>
     )
 };
