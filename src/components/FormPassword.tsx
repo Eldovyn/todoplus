@@ -3,6 +3,7 @@ import { apiUpdateUserPassword } from "@/api/user";
 import { alertFailed } from "./ui/Alert";
 import Cookies from "js-cookie";
 import { redirect } from 'next/navigation';
+import LoadingSpinnerComponent from 'react-spinners-components';
 
 const FormPassword: React.FC = () => {
     const [password, setPassword] = useState<string>('');
@@ -54,7 +55,9 @@ const FormPassword: React.FC = () => {
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     value={confirmPassword}
                 />
-                <button type="submit" className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-md">Submit Password</button>
+                <button type="submit" className="mt-2 px-4 py-2 bg-blue-600 text-white rounded-md">
+                {loading ? <LoadingSpinnerComponent type={'Spinner'} color={'white'} size={'20px'} /> : "Submit Password"}
+                </button>
             </form>
         </>
     )
