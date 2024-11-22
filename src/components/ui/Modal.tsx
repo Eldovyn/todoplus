@@ -3,11 +3,16 @@ import { toast } from 'react-toastify';
 import Cookies from 'js-cookie';
 import LoadingSpinnerComponent from 'react-spinners-components';
 
+interface Task {
+    id: string;
+    title: string;
+}
+
 interface ModalProps {
     isOpen: boolean;
     onClose: () => void;
     id: string;
-    setListTask: React.Dispatch<React.SetStateAction<any[]>>
+    setListTask: React.Dispatch<React.SetStateAction<Task[]>>
 }
 
 const Modal: React.FunctionComponent<ModalProps> = ({ isOpen, onClose, id, setListTask }) => {
@@ -33,6 +38,45 @@ const Modal: React.FunctionComponent<ModalProps> = ({ isOpen, onClose, id, setLi
         toast.error(message, {
             position: "bottom-right",
         });
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+        if (e.key === 'Enter') {
+            if (isOpen) {
+                const api_task = async () => {
+                    let response = await fetch('http://localhost:5000/todoplus/task/title', {
+                        method: 'PATCH',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': `Bearer ${Cookies.get('accessToken')}`,
+                        },
+                        body: JSON.stringify({
+                            new_title: title,
+                            id: id,
+                            limit: 5
+                        }),
+                    });
+                    let resp = await response.json();
+                    if (response.status !== 201) {
+                        if (response.status === 400) {
+                            setTitleError(true);
+                            setTitleMessageError(resp.errors.new_title[0]);
+                        }
+                        alertFailed(resp.message);
+                        setLoadingUpdate(false);
+                        setLoading(false);
+                        return;
+                    }
+                    setListTask(resp.new_task);
+                    setLoadingUpdate(false);
+                    setLoading(false);
+                    onClose();
+                    alertSuccess(resp.message);
+                    return
+                };
+                api_task();
+            }
+        }
     };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -87,6 +131,7 @@ const Modal: React.FunctionComponent<ModalProps> = ({ isOpen, onClose, id, setLi
                         aria-describedby="passwordHelp"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
+                        onKeyDown={handleKeyDown}
                     />
                     {titleError && <p className="text-red-500 text-xs text-start">{titleMessageError}</p>}
                 </div>
