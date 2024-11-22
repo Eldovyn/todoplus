@@ -25,4 +25,16 @@ const apiGetUser = async (accessToken: string) => {
     return response;
 }
 
-export { apiUpdateUserProfile, apiGetUser }
+const apiUpdateUserPassword = async (accessToken: string, options: UserOptions) => {
+    let response = await fetch(`${process.env.NEXT_PUBLIC_TODOPLUS_API}todoplus/password`, {
+        method: 'PATCH',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
+        },
+        body: JSON.stringify(options)
+    })
+    return response;
+}
+
+export { apiUpdateUserProfile, apiGetUser, apiUpdateUserPassword }

@@ -9,7 +9,7 @@ import { ToastContainer } from 'react-toastify';
 const LoginPage: React.FC = () => {
     return (
         <>
-            <div className="flex items-center justify-center bg-gray-900 text-gray-900">
+            <div className="flex items-center justify-center min-h-screen bg-gray-900 text-gray-900">
                 <span className="border-2 bg-[#F0F1F5] rounded-md p-5 md:w-[60%] w-[80%] xl:w-[45%]">
                     <div className="flex justify-between pt-2">
                         <div className='flex justify-start'>
