@@ -27,8 +27,17 @@ const Home: React.FunctionComponent = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const [selectedTaskId, setSelectedTaskId] = useState<string | null>(null);
+
+  const openModal = (id: string) => {
+    setSelectedTaskId(id); // Set ID task yang dipilih
+    setIsModalOpen(true);  // Buka modal
+  };
+
+  const closeModal = () => {
+    setSelectedTaskId(null); // Reset ID task saat modal ditutup
+    setIsModalOpen(false);
+  };
 
   const alertSuccess = async (message: string) => {
     toast.success(message, {
@@ -185,9 +194,18 @@ const Home: React.FunctionComponent = () => {
                   <p className={`text-sm ${item.is_completed ? 'line-through' : ''}`}>{item.title}</p>
                   <div className="flex flex-row items-center">
                     <FaTrash size={18} className="m-1 cursor-pointer" onClick={loadingRemove ? () => { } : () => handleRemoveListTask(item.id)} />
-                    <MdEdit size={18} className="m-1 cursor-pointer" onClick={openModal}/>
+                    <MdEdit
+                      size={18}
+                      className="m-1 cursor-pointer"
+                      onClick={() => openModal(item.id)}
+                    />
                     <input className="cursor-pointer m-1 form-checkbox h-4 w-4 text-blue-600 transition duration-150 ease-in-out" type="checkbox" checked={item.is_completed} id="flexCheckDefault" onChange={loadingUpdate ? () => { } : () => handleUpdateIsCompleted(item.id, item.is_completed)} />
-                    <Modal isOpen={isModalOpen} onClose={closeModal} />
+                    <Modal
+                      isOpen={isModalOpen}
+                      onClose={closeModal}
+                      id={selectedTaskId || ""}
+                      setListTask={setListTask}
+                    />
                   </div>
                 </div>
               </div>
