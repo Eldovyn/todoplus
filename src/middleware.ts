@@ -7,7 +7,7 @@ export async function middleware(request: NextRequest) {
     const accessToken = request.cookies.get('accessToken');
     const secret = process.env.SECRET_KEY;
 
-    if (pathname === '/') {
+    if (pathname === '/' || pathname === '/profile') {
         if (!accessToken) {
             return NextResponse.redirect(new URL('/login', request.url));
         }
