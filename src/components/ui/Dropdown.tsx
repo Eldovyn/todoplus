@@ -37,7 +37,7 @@ const Dropdown = () => {
                     tabIndex={-1}
                 >
                     <div className="py-1" role="none">
-                        <div className="flex flex-row text-white items-center cursor-pointer ms-2 text-sm m-1">
+                        <div className="flex flex-row text-white items-center cursor-pointer ms-2 text-sm m-1" onClick={() => redirect('/profile')}>
                             <MdAccountCircle size={25} color='#374151' />
                             <div className="pl-1 text-gray-700">Account</div>
                         </div>

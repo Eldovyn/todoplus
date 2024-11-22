@@ -4,6 +4,7 @@ import { MdOutlineHistoryToggleOff } from "react-icons/md";
 import IconWeb from '../../public/IconRemoverBg.png';
 import Image from "next/image";
 import Dropdown from "./ui/Dropdown";
+import { redirect } from 'next/navigation';
 
 interface NavBarProps {
     isOpen: boolean;
@@ -46,9 +47,9 @@ const NavBar: React.FC<NavBarProps> = ({ isOpen, setIsOpen }) => {
                         id="navbarNav"
                     >
                         <ul className={`md:flex items-center space-y-4 md:space-y-0 md:space-x-4 p-4 md:p-0 text-lg`}>
-                            <li className="nav-item">
+                            <li className="nav-item" onClick={() => redirect('/')}>
                                 <div className="flex flex-row text-white items-center cursor-pointer">
-                                    <IoMdAddCircle size={25} />
+                                    <IoMdAddCircle size={25}/>
                                     <div className="me-1 ms-1">Todo List</div>
                                 </div>
                             </li>
