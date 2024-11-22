@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { apiUpdateUserPassword } from "@/api/user";
-import { alertFailed, alertSuccess } from "./ui/Alert";
+import { alertFailed } from "./ui/Alert";
 import Cookies from "js-cookie";
+import { redirect } from 'next/navigation';
 
 const FormPassword: React.FC = () => {
     const [password, setPassword] = useState<string>('');
@@ -28,7 +29,8 @@ const FormPassword: React.FC = () => {
             return;
         }
         setLoading(false);
-        await alertSuccess(resp.message);
+        Cookies.remove('accessToken');
+        redirect('/');
     };
 
     return (
