@@ -1,6 +1,6 @@
 import React from "react";
 
-const AccountPage: React.FunctionComponent = () => {
+const AccountPage: React.FC = () => {
     return (
         <>
 

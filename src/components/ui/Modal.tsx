@@ -15,18 +15,31 @@ interface ModalProps {
     setListTask: React.Dispatch<React.SetStateAction<Task[]>>
 }
 
-const Modal: React.FunctionComponent<ModalProps> = ({ isOpen, onClose, id, setListTask }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, id, setListTask }) => {
     if (!isOpen) return null;
 
     const [title, setTitle] = useState('');
     const [titleError, setTitleError] = useState(false);
 
-    const [loadingRemove, setLoadingRemove] = useState(false);
-
     const [titleMessageError, setTitleMessageError] = useState('');
 
-    const [loadingUpdate, setLoadingUpdate] = useState(false);
     const [loading, setLoading] = useState(false);
+
+    const apiTask = async () => {
+        let response = await fetch(`${process.env.NEXT_PUBLIC_TODOPLUS_API}todoplus/task/title`, {
+            method: 'PATCH',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${Cookies.get('accessToken')}`,
+            },
+            body: JSON.stringify({
+                new_title: title,
+                id: id,
+                limit: 5
+            }),
+        });
+        return response;
+    }
 
     const alertSuccess = async (message: string) => {
         toast.success(message, {
@@ -42,20 +55,9 @@ const Modal: React.FunctionComponent<ModalProps> = ({ isOpen, onClose, id, setLi
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
-            if (isOpen) {
+            if (isOpen && !loading) {
                 const api_task = async () => {
-                    let response = await fetch('http://localhost:5000/todoplus/task/title', {
-                        method: 'PATCH',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'Authorization': `Bearer ${Cookies.get('accessToken')}`,
-                        },
-                        body: JSON.stringify({
-                            new_title: title,
-                            id: id,
-                            limit: 5
-                        }),
-                    });
+                    let response = await apiTask();
                     let resp = await response.json();
                     if (response.status !== 201) {
                         if (response.status === 400) {
@@ -63,37 +65,29 @@ const Modal: React.FunctionComponent<ModalProps> = ({ isOpen, onClose, id, setLi
                             setTitleMessageError(resp.errors.new_title[0]);
                         }
                         alertFailed(resp.message);
-                        setLoadingUpdate(false);
+                        setLoading(false);
                         setLoading(false);
                         return;
                     }
                     setListTask(resp.new_task);
-                    setLoadingUpdate(false);
+                    setLoading(false);
                     setLoading(false);
                     onClose();
                     alertSuccess(resp.message);
                     return
                 };
                 api_task();
+                return
             }
+            return
         }
     };
 
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        setLoading(true);
         const api_task = async () => {
-            let response = await fetch('http://localhost:5000/todoplus/task/title', {
-                method: 'PATCH',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${Cookies.get('accessToken')}`,
-                },
-                body: JSON.stringify({
-                    new_title: title,
-                    id: id,
-                    limit: 5
-                }),
-            });
+            let response = await apiTask();
             let resp = await response.json();
             if (response.status !== 201) {
                 if (response.status === 400) {
@@ -101,12 +95,12 @@ const Modal: React.FunctionComponent<ModalProps> = ({ isOpen, onClose, id, setLi
                     setTitleMessageError(resp.errors.new_title[0]);
                 }
                 alertFailed(resp.message);
-                setLoadingUpdate(false);
+                setLoading(false);
                 setLoading(false);
                 return;
             }
             setListTask(resp.new_task);
-            setLoadingUpdate(false);
+            setLoading(false);
             setLoading(false);
             onClose();
             alertSuccess(resp.message);

@@ -6,7 +6,7 @@ import RegisterForm from "@/components/Register";
 import { ToastContainer } from 'react-toastify';
 import "react-toastify/dist/ReactToastify.css";
 
-const RegisterPage: React.FunctionComponent = () => {
+const RegisterPage: React.FC = () => {
     return (
         <>
             <div className="flex items-center justify-center min-h-screen bg-gray-900 text-gray-900">

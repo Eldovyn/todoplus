@@ -10,7 +10,7 @@ interface AddTaskProps {
     setListTask: Dispatch<SetStateAction<any[]>>;
 }
 
-const AddTask: React.FunctionComponent<AddTaskProps> = ({ listTask, setListTask }) => {
+const AddTask: React.FC<AddTaskProps> = ({ listTask, setListTask }) => {
     const [title, setTitle] = useState("");
 
     const [loading, setLoading] = useState(false);

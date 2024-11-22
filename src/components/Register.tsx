@@ -5,7 +5,7 @@ import { toast } from 'react-toastify';
 import { redirect } from 'next/navigation';
 import LoadingSpinnerComponent from 'react-spinners-components';
 
-const RegisterForm: React.FunctionComponent = () => {
+const RegisterForm: React.FC = () => {
     const [email, setEmail] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
@@ -31,7 +31,7 @@ const RegisterForm: React.FunctionComponent = () => {
     }, []);
 
     const userRegister = async (email: string, username: string, password: string, confirmPassword: string) => {
-        let response = await fetch('http://localhost:5000/todoplus/register', {
+        let response = await fetch(`${process.env.NEXT_PUBLIC_TODOPLUS_API}todoplus/register`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

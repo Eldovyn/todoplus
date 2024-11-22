@@ -6,7 +6,7 @@ import LoginForm from '@/components/Login';
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from 'react-toastify';
 
-const LoginPage: React.FunctionComponent = () => {
+const LoginPage: React.FC = () => {
     return (
         <>
             <div className="flex items-center justify-center min-h-screen bg-gray-900 text-gray-900">

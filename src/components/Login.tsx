@@ -6,7 +6,7 @@ import LoadingSpinnerComponent from 'react-spinners-components';
 import { redirect } from 'next/navigation';
 import Cookies from 'js-cookie';
 
-const LoginForm: React.FunctionComponent = () => {
+const LoginForm: React.FC = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false);
@@ -19,6 +19,7 @@ const LoginForm: React.FunctionComponent = () => {
     const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
 
     useEffect(() => {
+        console.log(process.env.NEXT_PUBLIC_TODOPLUS_API);
         setLoading(false);
     }, []);
 
@@ -35,7 +36,7 @@ const LoginForm: React.FunctionComponent = () => {
     };
 
     const userLogin = async (email: string, password: string) => {
-        let response = await fetch('http://localhost:5000/todoplus/login', {
+        let response = await fetch(`${process.env.NEXT_PUBLIC_TODOPLUS_API}todoplus/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
