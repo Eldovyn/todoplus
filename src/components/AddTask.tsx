@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { IoAdd } from 'react-icons/io5';
-import { toast } from 'react-toastify';
+import { alertFailed, alertSuccess } from "./ui/Alert";
 import Cookies from 'js-cookie';
 import { redirect } from 'next/navigation';
 import { Dispatch, SetStateAction } from 'react';
@@ -23,18 +23,6 @@ const AddTask: React.FC<AddTaskProps> = ({ listTask, setListTask }) => {
         const accessToken = Cookies.get('accessToken');
         setToken(accessToken ?? '');
     }, []);
-
-    const alertSuccess = async (message: string) => {
-        toast.success(message, {
-            position: "bottom-right",
-        });
-    };
-
-    const alertFailed = async (message: string) => {
-        toast.error(message, {
-            position: "bottom-right",
-        });
-    };
 
     const userTask = async () => {
         let response = await fetch('http://127.0.0.1:5000/todoplus/task', {

@@ -2,7 +2,7 @@
 import React from 'react';
 import Image from 'next/image'
 import IconWeb from '../../../../public/IconRemoverBg.png'
-import LoginForm from '@/components/FormLogin';
+import ResetPasswordForm from '@/components/FormResetPassword';
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from 'react-toastify';
 
@@ -16,14 +16,14 @@ const LoginPage: React.FC = () => {
                             <Image src={IconWeb} alt='' className='w-10' />
                             <p className='font-bold text-sm'>TodoPlus</p>
                         </div>
-                        <a href={`${process.env.NEXT_PUBLIC_TODOPLUS_URL}register`}>
-                            <p className='underline font-semibold text-sm'>Register</p>
+                        <a href={`${process.env.NEXT_PUBLIC_TODOPLUS_URL}login`}>
+                            <p className='underline font-semibold text-sm'>Login</p>
                         </a>
                     </div>
                     <br /><br /><br />
                     <p className='font-bold text-center text-lg'>Welcome Back</p>
                     <p className='text-center text-sm pt-1'>Enter Your Account Details</p>
-                    <LoginForm />
+                    <ResetPasswordForm />
                     <ToastContainer />
                 </span>
             </div>

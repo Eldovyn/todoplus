@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { toast } from 'react-toastify';
+import { alertFailed, alertSuccess } from './ui/Alert';
 import { IoEyeOutline } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa";
 import LoadingSpinnerComponent from 'react-spinners-components';
 import { redirect } from 'next/navigation';
 import Cookies from 'js-cookie';
+import { apiUserLogin } from '@/api/user';
 
 const LoginForm: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -19,40 +20,13 @@ const LoginForm: React.FC = () => {
     const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
 
     useEffect(() => {
-        console.log(process.env.NEXT_PUBLIC_TODOPLUS_API);
         setLoading(false);
     }, []);
-
-    const alertSuccess = async (message: string) => {
-        toast.success(message, {
-            position: "bottom-right",
-        });
-    };
-
-    const alertFailed = async (message: string) => {
-        toast.error(message, {
-            position: "bottom-right",
-        });
-    };
-
-    const userLogin = async (email: string, password: string) => {
-        let response = await fetch(`${process.env.NEXT_PUBLIC_TODOPLUS_API}todoplus/login`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: email,
-                password: password,
-            }),
-        });
-        return response;
-    };
 
     const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
         setLoading(true);
         e.preventDefault();
-        const api_login = await userLogin(email, password);
+        const api_login = await apiUserLogin(email, password);
         let data = await api_login.json();
         if (api_login.status === 400) {
             if (data.errors) {
@@ -132,8 +106,8 @@ const LoginForm: React.FC = () => {
                     </button>
                     {passwordError && <p className="text-red-500 text-xs mt-1">{passwordErrorMessage}</p>}
                 </div>
-                <a href="http://localhost:3000/register">
-                    <p className='underline font-semibold text-sm mb-3 text-right'>Forget Password</p>
+                <a href={`${process.env.NEXT_PUBLIC_TODOPLUS_URL}forgot-password`}>
+                    <p className='underline font-semibold text-sm mb-3 text-right'>Forgot Password</p>
                 </a>
                 <button
                     type="submit"

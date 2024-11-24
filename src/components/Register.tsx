@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { IoEyeOutline } from "react-icons/io5";
 import { FaRegEyeSlash } from "react-icons/fa";
-import { toast } from 'react-toastify';
+import { alertFailed, alertSuccess } from './ui/Alert';
 import { redirect } from 'next/navigation';
 import LoadingSpinnerComponent from 'react-spinners-components';
+import { apiUserRegister } from '@/api/user';
 
 const RegisterForm: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -30,34 +31,6 @@ const RegisterForm: React.FC = () => {
         setLoading(false);
     }, []);
 
-    const userRegister = async (email: string, username: string, password: string, confirmPassword: string) => {
-        let response = await fetch(`${process.env.NEXT_PUBLIC_TODOPLUS_API}todoplus/register`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                email: email,
-                username: username,
-                password: password,
-                confirmPassword: confirmPassword
-            })
-        });
-        return response;
-    };
-
-    const alertSuccess = async (message: string) => {
-        toast.success(message, {
-            position: "bottom-right",
-        });
-    };
-
-    const alertFailed = async (message: string) => {
-        toast.error(message, {
-            position: "bottom-right",
-        });
-    };
-
     const clearForm = async () => {
         setEmail('');
         setEmailError(false);
@@ -76,7 +49,7 @@ const RegisterForm: React.FC = () => {
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
-        const api_register = await userRegister(email, username, password, confirmPassword);
+        const api_register = await apiUserRegister(email, username, password, confirmPassword);
         let data = await api_register.json();
         if (api_register.status === 400) {
             if (data.errors) {
