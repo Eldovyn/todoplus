@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import LoadingSpinnerComponent from 'react-spinners-components';
+import { apiUserResetPassword } from '@/api/user';
+import { alertFailed, alertSuccess } from './ui/Alert';
 
 const ResetPasswordForm: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -13,9 +15,30 @@ const ResetPasswordForm: React.FC = () => {
         setLoading(false);
     }, []);
 
+    const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
+        setLoading(true);
+        const api_task = await apiUserResetPassword(email);
+        const resp = await api_task.json();
+        if (api_task.status !== 201) {
+            if (resp.errors && resp.errors.email) {
+                setEmailError(true);
+                setEmailErrorMessage(resp.errors.email[0]);
+            }
+            setLoading(false);
+            await alertFailed(resp.message);
+            return;
+        }
+        setEmailErrorMessage('');
+        setEmailError(false);
+        setEmail('');
+        setLoading(false);
+        await alertSuccess(resp.message);
+    }
+
     return (
         <>
-            <form className='pt-2'>
+            <form className='pt-2' onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <input
                         type="email"

@@ -55,7 +55,7 @@ const apiUserLogin = async (email: string, password: string) => {
 
 
 
-const apiUserRegister = async (email: string, username: string, password: string, confirmPassword: string) => {
+const apiUserRegister = async (email: string, username: string, password: string) => {
     let response = await fetch(`${process.env.NEXT_PUBLIC_TODOPLUS_API}todoplus/register`, {
         method: 'POST',
         headers: {
@@ -65,10 +65,23 @@ const apiUserRegister = async (email: string, username: string, password: string
             email: email,
             username: username,
             password: password,
-            confirmPassword: confirmPassword
         })
     });
     return response;
 };
 
-export { apiUpdateUserProfile, apiGetUser, apiUpdateUserPassword, apiUserLogin, apiUserRegister };
+
+const apiUserResetPassword = async (email: string) => {
+    let response = await fetch(`${process.env.NEXT_PUBLIC_TODOPLUS_API}todoplus/reset-password`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email: email,
+        })
+    });
+    return response;
+};
+
+export { apiUpdateUserProfile, apiGetUser, apiUpdateUserPassword, apiUserLogin, apiUserRegister, apiUserResetPassword };
