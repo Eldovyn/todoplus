@@ -5,7 +5,7 @@ import { FaRegEyeSlash } from "react-icons/fa";
 import LoadingSpinnerComponent from 'react-spinners-components';
 import { redirect } from 'next/navigation';
 import Cookies from 'js-cookie';
-import { apiUserLogin } from '@/api/user';
+import { apiUserLogin, apiUserAccountVerification } from '@/api/user';
 
 const LoginForm: React.FC = () => {
     const [email, setEmail] = useState('');
@@ -52,6 +52,17 @@ const LoginForm: React.FC = () => {
             setLoading(false);
             await alertFailed(data.message);
             return;
+        }
+        if (api_login.status === 403) {
+            await alertFailed(data.message);
+            setLoading(false);
+            setEmailError(false);
+            setPasswordError(false);
+            const api_verification = await apiUserAccountVerification(email);
+            const api_resp = await api_verification.json();
+            if (api_verification.status === 201) {
+                return redirect(`${process.env.NEXT_PUBLIC_TODOPLUS_API}todoplus/account-active/verification?user_id=${data.data.id}&token=${api_resp.data.token}`);
+            }
         }        
         if (api_login.status !== 201) {
             await alertFailed(data.message);

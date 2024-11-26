@@ -84,4 +84,17 @@ const apiUserResetPassword = async (email: string) => {
     return response;
 };
 
-export { apiUpdateUserProfile, apiGetUser, apiUpdateUserPassword, apiUserLogin, apiUserRegister, apiUserResetPassword };
+const apiUserAccountVerification = async (email: string) => {
+    let response = await fetch(`${process.env.NEXT_PUBLIC_TODOPLUS_API}todoplus/account-active`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+            email: email,
+        })
+    });
+    return response;
+};
+
+export { apiUserAccountVerification, apiUpdateUserProfile, apiGetUser, apiUpdateUserPassword, apiUserLogin, apiUserRegister, apiUserResetPassword };

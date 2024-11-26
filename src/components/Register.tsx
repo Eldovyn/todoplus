@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { alertFailed, alertSuccess } from './ui/Alert';
 import { redirect } from 'next/navigation';
 import LoadingSpinnerComponent from 'react-spinners-components';
-import { apiUserRegister } from '@/api/user';
+import { apiUserRegister, apiUserAccountVerification } from '@/api/user';
 import EyePassword from './ui/EyePassword';
 import PasswordError from './ui/PasswordError';
 
@@ -75,6 +75,11 @@ const RegisterForm: React.FC = () => {
             return;
         }
         await alertSuccess(data.message);
+        const api_verification = await apiUserAccountVerification(email);
+        const api_resp = await api_verification.json();
+        if (api_verification.status === 201) {
+            return redirect(`${process.env.NEXT_PUBLIC_TODOPLUS_API}todoplus/account-active/verification?user_id=${data.data.id}&token=${api_resp.data.token}`);
+        }
         setLoading(false);
         await clearForm();
         redirect('/login');

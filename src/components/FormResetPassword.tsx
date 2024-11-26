@@ -51,8 +51,8 @@ const ResetPasswordForm: React.FC = () => {
                     />
                     {emailError && <p className="text-red-500 text-xs mt-1">{emailErrorMessage}</p>}
                 </div>
-                <a href={`${process.env.NEXT_PUBLIC_TODOPLUS_URL}login`}>
-                    <p className='underline font-semibold text-sm mb-3 text-right'>Login</p>
+                <a href={`${process.env.NEXT_PUBLIC_TODOPLUS_URL}register`}>
+                    <p className='underline font-semibold text-sm mb-3 text-right'>Register</p>
                 </a>
                 <button
                     type="submit"
