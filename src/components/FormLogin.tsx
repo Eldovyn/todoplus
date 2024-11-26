@@ -61,6 +61,7 @@ const LoginForm: React.FC = () => {
             const api_verification = await apiUserAccountVerification(email);
             const api_resp = await api_verification.json();
             if (api_verification.status === 201) {
+                setLoading(false);
                 return redirect(`${process.env.NEXT_PUBLIC_TODOPLUS_API}todoplus/account-active/verification?user_id=${data.data.id}&token=${api_resp.data.token}`);
             }
         }        
