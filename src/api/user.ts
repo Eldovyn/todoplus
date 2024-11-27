@@ -97,4 +97,26 @@ const apiUserAccountVerification = async (email: string) => {
     return response;
 };
 
-export { apiUserAccountVerification, apiUpdateUserProfile, apiGetUser, apiUpdateUserPassword, apiUserLogin, apiUserRegister, apiUserResetPassword };
+const apiTaskPagination = async (accessToken: string, limit: string, per_page: string) => {
+    let response = await fetch(`${process.env.NEXT_PUBLIC_TODOPLUS_API}todoplus/task/page?limit=${limit}&per_page=${per_page}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
+        },
+    });
+    return response;
+}
+
+const apiAllTask = async (accessToken: string, limit: string) => {
+    let response = await fetch(`${process.env.NEXT_PUBLIC_TODOPLUS_API}todoplus/task/all?limit=${limit}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`
+        },
+    });
+    return response;
+}
+
+export { apiAllTask, apiTaskPagination, apiUserAccountVerification, apiUpdateUserProfile, apiGetUser, apiUpdateUserPassword, apiUserLogin, apiUserRegister, apiUserResetPassword };

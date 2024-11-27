@@ -16,7 +16,7 @@ const RegisterPage: React.FC = () => {
                             <Image src={IconWeb} alt='' className='w-10' />
                             <p className='font-bold text-sm'>TodoPlus</p>
                         </div>
-                        <a href={`${process.env.NEXT_PUBLIC_TODOPLUS_URL}login`}>
+                        <a href={`${process.env.NEXT_PUBLIC_BASE_URL}login`}>
                             <p className='underline font-semibold text-sm'>Login</p>
                         </a>
                     </div>

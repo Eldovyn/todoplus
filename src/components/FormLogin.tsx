@@ -55,7 +55,6 @@ const LoginForm: React.FC = () => {
         }
         if (api_login.status === 403) {
             await alertFailed(data.message);
-            setLoading(false);
             setEmailError(false);
             setPasswordError(false);
             const api_verification = await apiUserAccountVerification(email);
@@ -118,7 +117,7 @@ const LoginForm: React.FC = () => {
                     </button>
                     {passwordError && <p className="text-red-500 text-xs mt-1">{passwordErrorMessage}</p>}
                 </div>
-                <a href={`${process.env.NEXT_PUBLIC_TODOPLUS_URL}forgot-password`}>
+                <a href={`${process.env.NEXT_PUBLIC_BASE_URL}forgot-password`}>
                     <p className='underline font-semibold text-sm mb-3 text-right'>Forgot Password</p>
                 </a>
                 <button

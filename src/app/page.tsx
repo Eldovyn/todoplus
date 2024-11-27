@@ -10,6 +10,7 @@ import Modal from "@/components/ui/Modal";
 import TrashTask from "@/components/ui/TrashTask";
 import EditTask from "@/components/ui/EditTask";
 import Completed from "@/components/ui/Completed";
+import { apiAllTask } from "@/api/user";
 
 const Home: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -35,14 +36,8 @@ const Home: React.FC = () => {
     setLoading(true);
     const fetchData = async () => {
       const accessToken = Cookies.get('accessToken');
-      let response = await fetch(`${process.env.NEXT_PUBLIC_TODOPLUS_API}todoplus/task/all?limit=5`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${accessToken}`,
-        },
-      })
-      let resp = await response.json();
+      const response = await apiAllTask(accessToken ?? '', '5');
+      const resp = await response.json();
       if (response.status === 200) {
         setListTask(resp.data);
       }
