@@ -12,7 +12,7 @@ const EditTask: React.FC<EditTaskProps> = ({ item, openModal }) => {
             <MdEdit
                 size={18}
                 className="m-1 cursor-pointer"
-                onClick={() => openModal(item.id)}
+                onClick={() => openModal(item.task_id)}
             />
         </>
     )

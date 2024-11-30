@@ -1,16 +1,16 @@
 'use client';
 import React, { useState, useEffect } from "react";
-import AddTask from "@/components/AddTask";
+import AddTask from "@/components/ui/Home/AddTask";
 import "react-toastify/dist/ReactToastify.css";
 import { ToastContainer } from 'react-toastify';
 import Cookies from 'js-cookie';
 import LoadingSpinnerComponent from 'react-spinners-components';
 import NavBar from "@/components/NavBar";
-import Modal from "@/components/ui/Modal";
-import TrashTask from "@/components/ui/TrashTask";
-import EditTask from "@/components/ui/EditTask";
-import Completed from "@/components/ui/Completed";
-import { apiAllTask } from "@/api/user";
+import Modal from "@/components/ui/Home/Modal";
+import TrashTask from "@/components/ui/Home/TrashTask";
+import EditTask from "@/components/ui/Home/EditTask";
+import Completed from "@/components/ui/Home/Completed";
+import { apiAllTask } from "@/api/task";
 
 const Home: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -39,7 +39,7 @@ const Home: React.FC = () => {
       const response = await apiAllTask(accessToken ?? '', '5');
       const resp = await response.json();
       if (response.status === 200) {
-        setListTask(resp.data);
+        setListTask(resp.data.tasks);
       }
       setLoading(false);
     }
@@ -56,7 +56,7 @@ const Home: React.FC = () => {
         {
           loading ? <LoadingSpinnerComponent type={'Spinner'} color={'black'} size={'50px'} /> :
             listTask.slice(0, 5).map((item: any) => (
-              <div key={item.id} className="border rounded-lg shadow p-4 text-white w-[60%] mx-auto m-5 bg-gray-900">
+              <div key={item.task_id} className="border rounded-lg shadow p-4 text-white w-[60%] mx-auto m-5 bg-gray-900">
                 <div className="p-1 flex justify-between items-center">
                   <p className={`text-sm ${item.is_completed ? 'line-through' : ''}`}>{item.title}</p>
                   <div className="flex flex-row items-center">
@@ -68,6 +68,7 @@ const Home: React.FC = () => {
                       onClose={closeModal}
                       id={selectedTaskId || ""}
                       setListTask={setListTask}
+                      limit={5}
                     />
                   </div>
                 </div>

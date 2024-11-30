@@ -4,7 +4,7 @@ import { MdOutlineHistoryToggleOff } from "react-icons/md";
 import IconWeb from '../../public/IconRemoverBg.png';
 import Image from "next/image";
 import Dropdown from "./ui/Dropdown";
-import { redirect } from 'next/navigation';
+import Link from 'next/link';
 
 interface NavBarProps {
     isOpen: boolean;
@@ -47,17 +47,21 @@ const NavBar: React.FC<NavBarProps> = ({ isOpen, setIsOpen }) => {
                         id="navbarNav"
                     >
                         <ul className={`md:flex items-center space-y-4 md:space-y-0 md:space-x-4 p-4 md:p-0 text-lg`}>
-                            <li className="nav-item" onClick={() => redirect('/')}>
-                                <div className="flex flex-row text-white items-center cursor-pointer">
-                                    <IoMdAddCircle size={25}/>
-                                    <div className="me-1 ms-1">Todo List</div>
-                                </div>
+                            <li className="nav-item">
+                                <Link href="/">
+                                    <div className="flex flex-row text-white items-center cursor-pointer">
+                                        <IoMdAddCircle size={25}/>
+                                        <div className="me-1 ms-1">Todo List</div>
+                                    </div>
+                                </Link>
                             </li>
                             <li className="nav-item">
-                                <div className="flex flex-row text-white items-center cursor-pointer">
-                                    <MdOutlineHistoryToggleOff size={25} />
-                                    <div className="me-1 ms-1">History</div>
-                                </div>
+                                <Link href="/history">
+                                    <div className="flex flex-row text-white items-center cursor-pointer">
+                                        <MdOutlineHistoryToggleOff size={25} />
+                                        <div className="me-1 ms-1">History</div>
+                                    </div>
+                                </Link>
                             </li>
                             <li className="nav-item">
                                 <Dropdown />
@@ -70,4 +74,4 @@ const NavBar: React.FC<NavBarProps> = ({ isOpen, setIsOpen }) => {
     )
 }
 
-export default NavBar
+export default NavBar;

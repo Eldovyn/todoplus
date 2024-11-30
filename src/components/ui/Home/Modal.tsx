@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { toast } from 'react-toastify';
+import { alertFailed, alertSuccess } from './../Alert';
+import { apiUpdateTitle } from '@/api/task';
 import Cookies from 'js-cookie';
 import LoadingSpinnerComponent from 'react-spinners-components';
 
@@ -13,9 +14,10 @@ interface ModalProps {
     onClose: () => void;
     id: string;
     setListTask: React.Dispatch<React.SetStateAction<Task[]>>
+    limit: number
 }
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, id, setListTask }) => {
+const Modal: React.FC<ModalProps> = ({ isOpen, onClose, id, setListTask, limit }) => {
     if (!isOpen) return null;
 
     const [title, setTitle] = useState('');
@@ -25,39 +27,11 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, id, setListTask }) => {
 
     const [loading, setLoading] = useState(false);
 
-    const apiTask = async () => {
-        let response = await fetch(`${process.env.NEXT_PUBLIC_TODOPLUS_API}todoplus/task/title`, {
-            method: 'PATCH',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${Cookies.get('accessToken')}`,
-            },
-            body: JSON.stringify({
-                new_title: title,
-                id: id,
-                limit: 5
-            }),
-        });
-        return response;
-    }
-
-    const alertSuccess = async (message: string) => {
-        toast.success(message, {
-            position: "bottom-right",
-        });
-    };
-
-    const alertFailed = async (message: string) => {
-        toast.error(message, {
-            position: "bottom-right",
-        });
-    };
-
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === 'Enter') {
             if (isOpen && !loading) {
                 const api_task = async () => {
-                    let response = await apiTask();
+                    let response = await apiUpdateTitle(Cookies.get('accessToken') as string, title, id, limit as number);
                     let resp = await response.json();
                     if (response.status !== 201) {
                         if (response.status === 400) {
@@ -66,11 +40,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, id, setListTask }) => {
                         }
                         alertFailed(resp.message);
                         setLoading(false);
-                        setLoading(false);
                         return;
                     }
                     setListTask(resp.new_task);
-                    setLoading(false);
                     setLoading(false);
                     onClose();
                     alertSuccess(resp.message);
@@ -87,7 +59,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, id, setListTask }) => {
         e.preventDefault();
         setLoading(true);
         const api_task = async () => {
-            let response = await apiTask();
+            let response = await apiUpdateTitle(Cookies.get('accessToken') as string, title, id, limit as number);
             let resp = await response.json();
             if (response.status !== 201) {
                 if (response.status === 400) {
@@ -96,11 +68,9 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, id, setListTask }) => {
                 }
                 alertFailed(resp.message);
                 setLoading(false);
-                setLoading(false);
                 return;
             }
             setListTask(resp.new_task);
-            setLoading(false);
             setLoading(false);
             onClose();
             alertSuccess(resp.message);

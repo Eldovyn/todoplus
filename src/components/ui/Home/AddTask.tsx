@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { IoAdd } from 'react-icons/io5';
-import { alertFailed, alertSuccess } from "./ui/Alert";
+import { alertFailed, alertSuccess } from "./../Alert";
 import Cookies from 'js-cookie';
 import { redirect } from 'next/navigation';
 import { Dispatch, SetStateAction } from 'react';
+import { apiAddTask } from "@/api/task";
 
 interface AddTaskProps {
     listTask: any[];
@@ -24,25 +25,10 @@ const AddTask: React.FC<AddTaskProps> = ({ listTask, setListTask }) => {
         setToken(accessToken ?? '');
     }, []);
 
-    const userTask = async () => {
-        let response = await fetch('http://127.0.0.1:5000/todoplus/task', {
-            method: 'POST',
-            headers: {
-                'Authorization': 'Bearer ' + token,
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                title: title,
-                limit: 5
-            }),
-        });
-        return response;
-    };
-
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         setLoading(true);
-        const api_task = await userTask();
+        const api_task = await apiAddTask(token, title, 5);
         let data = await api_task.json();
         if (api_task.status !== 201) {
             setTitleError(false);

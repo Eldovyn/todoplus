@@ -1,17 +1,20 @@
 'use client';
-import React, { useState } from 'react';
-import { IoIosArrowDropleftCircle } from "react-icons/io";
-import { IoIosArrowDroprightCircle } from "react-icons/io";
+import React from 'react';
+import { IoIosArrowDropleftCircle, IoIosArrowDroprightCircle } from "react-icons/io";
 
-function Pagination() {
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
-    const totalItems = 200;
-    const totalPages = Math.ceil(totalItems / itemsPerPage);
-    const pageLimit = 5;
+interface PaginationProps {
+    currentPage: number;
+    setCurrentPage: React.Dispatch<React.SetStateAction<number>>;
+    itemsPerPage: number;
+    totalItems: number;
+    totalPages: number;
+    pageLimit: number;
+}
 
+const Pagination: React.FC<PaginationProps> = ({ currentPage, setCurrentPage, itemsPerPage, totalItems, totalPages, pageLimit }) => {
     const onPageChange = (page: number) => {
-        setCurrentPage(page);
+        setCurrentPage(page - 1);
+        console.log(page);
     };
 
     const getPageNumbers = () => {
@@ -19,15 +22,15 @@ function Pagination() {
         let endPage = totalPages;
 
         if (totalPages > pageLimit) {
-            if (currentPage <= Math.ceil(pageLimit / 2)) {
+            if (currentPage + 1 <= Math.ceil(pageLimit / 2)) {
                 startPage = 1;
                 endPage = pageLimit;
-            } else if (currentPage + Math.floor(pageLimit / 2) >= totalPages) {
+            } else if ((currentPage + 1) + Math.floor(pageLimit / 2) >= totalPages) {
                 startPage = totalPages - pageLimit + 1;
                 endPage = totalPages;
             } else {
-                startPage = currentPage - Math.floor(pageLimit / 2);
-                endPage = currentPage + Math.floor(pageLimit / 2);
+                startPage = (currentPage + 1) - Math.floor(pageLimit / 2);
+                endPage = (currentPage + 1) + Math.floor(pageLimit / 2);
             }
         }
 
@@ -43,17 +46,17 @@ function Pagination() {
     return (
         <nav aria-label="Pagination Navigation" className="flex justify-center">
             <ul className="flex list-none p-0">
-                <li className={`page-item ${currentPage === 1 ? 'pointer-events-none opacity-50' : ''}`}>
+                <li className={`page-item ${currentPage === 0 ? 'pointer-events-none opacity-50' : ''}`}>
                     <button
                         className="page-link w-12 px-3 py-2 border border-gray-300 rounded-l-lg flex justify-center items-center"
-                        onClick={() => onPageChange(currentPage - 1)}
-                        disabled={currentPage === 1}
+                        onClick={() => onPageChange(currentPage)}
+                        disabled={currentPage === 0}
                     >
                         <IoIosArrowDropleftCircle className='text-blue-500 w-6 h-6' />
                     </button>
                 </li>
                 {pageNumbers.map((number) => (
-                    <li key={number} className={`page-item ${currentPage === number ? 'active bg-blue-500 text-white' : ''}`}>
+                    <li key={number} className={`page-item ${currentPage + 1 === number ? 'active bg-blue-500 text-white' : ''}`}>
                         <button
                             onClick={() => onPageChange(number)}
                             className="page-link w-12 px-3 py-2 border border-gray-300 flex justify-center items-center"
@@ -62,11 +65,11 @@ function Pagination() {
                         </button>
                     </li>
                 ))}
-                <li className={`page-item ${currentPage === totalPages ? 'pointer-events-none opacity-50' : ''}`}>
+                <li className={`page-item ${currentPage + 1 === totalPages || totalPages === 0 ? 'pointer-events-none opacity-50' : ''}`}>
                     <button
                         className="page-link w-12 px-3 py-2 border border-gray-300 rounded-r-lg flex justify-center items-center"
-                        onClick={() => onPageChange(currentPage + 1)}
-                        disabled={currentPage === totalPages}
+                        onClick={() => onPageChange(currentPage + 2)}
+                        disabled={currentPage + 1 === totalPages || totalPages === 0}
                     >
                         <IoIosArrowDroprightCircle className='text-blue-500 w-6 h-6' />
                     </button>
