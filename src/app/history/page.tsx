@@ -12,6 +12,7 @@ import { MdEdit } from 'react-icons/md';
 import Modal from '@/components/ui/History/Modal';
 import TrashTask from '@/components/ui/History/TrashTask';
 import Completed from '@/components/ui/History/Completed';
+import { redirect } from 'next/navigation';
 
 function HistoryPage() {
     const [currentPage, setCurrentPage] = useState(0);
@@ -51,6 +52,10 @@ function HistoryPage() {
                     setTotalPage(resp.page.total_page);
                     setItemsPerPage(resp.page.per_page);
                     setTotalItems(resp.page.size);
+                }
+                if (response.status === 403) {
+                    Cookies.remove('accessToken');
+                    redirect('/login');
                 }
                 setLoading(false);
             }
