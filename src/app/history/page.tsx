@@ -85,7 +85,7 @@ function HistoryPage() {
             setLoading(true);
             const accessToken = Cookies.get('accessToken');
             if (accessToken) {
-                const response = await apiTaskPagination(accessToken, currentPage.toString(), '5');
+                const response = await apiTaskPagination(accessToken, "0", '5');
                 const resp = await response.json();
                 if (response.status === 200) {
                     setListTask(resp.page.tasks);
