@@ -28,7 +28,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, id, setListTask, limit, 
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (!id) return; // Jika ID tidak valid
+        if (!id) return;
         setLoading(true);
         const response = await apiUpdateTitle(Cookies.get('accessToken') ?? '', title, id, limit);
         const resp = await response.json();
