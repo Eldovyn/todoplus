@@ -1,36 +1,18 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Web TodoPlus
 
-## Getting Started
+TodoPlus ini adalah sebuah website todolist yang berfungsi untuk mencatat apa yang akan kita lakukan ke depannya
 
-First, run the development server:
+## Technology TodoPlus
+1. NextJS
+2. TailwindCSS
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+<details>
+  <summary>UI/UX TodoPlus</summary>
+  
+  ![Register](https://media.discordapp.net/attachments/1263460904994082902/1312836871880970301/image.png?ex=674df21d&is=674ca09d&hm=c5e64aef82d0e2bfb239afb66fa5268b4ea5b9123ff5969090330f102b24de75&=&format=webp&quality=lossless&width=1415&height=671)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+  ![Login](https://media.discordapp.net/attachments/1263460904994082902/1312836743887585411/image.png?ex=674df1ff&is=674ca07f&hm=cbac8dcdc51eee7933d2e4fbf97c1817e046265b4a45711c75dd408fb4d5d50c&=&format=webp&quality=lossless&width=1406&height=670)
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+  ![Reset Password](https://media.discordapp.net/attachments/1263460904994082902/1312836960062017566/image.png?ex=674df232&is=674ca0b2&hm=e6794a684b5473f357a403c5ca3d664490b647bbf33290890402669008f8ccb5&=&format=webp&quality=lossless&width=550&height=262)
+</details>
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
