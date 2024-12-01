@@ -1,33 +1,52 @@
 import React, { useState } from 'react';
+import { MdAccountCircle } from "react-icons/md";
+import { IoIosLogOut } from "react-icons/io";
+import Cookies from 'js-cookie';
+import { redirect } from 'next/navigation';
 
-const Dropdown: React.FunctionComponent = () => {
+const Dropdown = () => {
     const [isOpen, setIsOpen] = useState(false);
 
-    const toggleDropdown = () => {
-        setIsOpen(!isOpen);
+    const toggleDropdown = () => setIsOpen(!isOpen);
+
+    const handleLogout = () => {
+        Cookies.remove('accessToken');
+        redirect('/');
     };
 
     return (
-        <div className="flex-1 text-center">
+        <div className="relative inline-block text-left">
             <button
                 onClick={toggleDropdown}
-                className="px-4 py-2 text-sm font-medium text-white bg-gray-700 rounded-md hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-500"
+                className="inline-flex justify-center w-full rounded-md border shadow-sm px-4 py-2 text-sm font-medium text-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500"
+                id="menu-button"
+                aria-expanded={isOpen}
+                aria-haspopup="true"
             >
-                Dropdown button
+                <div className="flex flex-row text-white items-center cursor-pointer">
+                    <MdAccountCircle size={25} />
+                    <div className="me-1 ms-1">Account</div>
+                </div>
             </button>
-
             {isOpen && (
-                <ul className="absolute right-0 me-[7.5rem] mt-1 w-48 bg-white border border-gray-200 rounded-md shadow-lg">
-                    <li>
-                        <a className="block px-4 py-2 text-gray-700 hover:bg-gray-100" href="#">Action</a>
-                    </li>
-                    <li>
-                        <a className="block px-4 py-2 text-gray-700 hover:bg-gray-100" href="#">Another action</a>
-                    </li>
-                    <li>
-                        <a className="block px-4 py-2 text-gray-700 hover:bg-gray-100" href="#">Something else here</a>
-                    </li>
-                </ul>
+                <div
+                    className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100 focus:outline-none"
+                    role="menu"
+                    aria-orientation="vertical"
+                    aria-labelledby="menu-button"
+                    tabIndex={-1}
+                >
+                    <div className="py-1" role="none">
+                        <div className="flex flex-row text-white items-center cursor-pointer ms-2 text-sm m-1" onClick={() => redirect('/profile')}>
+                            <MdAccountCircle size={25} color='#374151' />
+                            <div className="pl-1 text-gray-700">Account</div>
+                        </div>
+                        <div onClick={handleLogout} className="flex flex-row text-white items-center cursor-pointer ms-2 text-sm m-1">
+                            <IoIosLogOut size={25} color='#374151' />
+                            <div className="pl-1 text-gray-700">Logout</div>
+                        </div>
+                    </div>
+                </div>
             )}
         </div>
     );
