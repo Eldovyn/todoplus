@@ -14,7 +14,6 @@ interface PaginationProps {
 const Pagination: React.FC<PaginationProps> = ({ currentPage, setCurrentPage, itemsPerPage, totalItems, totalPages, pageLimit }) => {
     const onPageChange = (page: number) => {
         setCurrentPage(page - 1);
-        console.log(page);
     };
 
     const getPageNumbers = () => {
