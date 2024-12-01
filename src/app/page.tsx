@@ -52,11 +52,11 @@ const Home: React.FC = () => {
       <div className="mx-auto px-4 w-full text-center">
         <p className="text-black font-bold text-3xl text-center pt-[6rem]">Apa Rencanamu Hari Ini ?</p>
         <AddTask listTask={listTask} setListTask={setListTask} />
-        {listTask.length > 0 && (<> <br /> <hr className="w-[60%] mx-auto" /> <br /> </>)}
+        {listTask.length > 0 && (<> <br /> <hr className="w-[45%] mx-auto" /> <br /> </>)}
         {
           loading ? <LoadingSpinnerComponent type={'Spinner'} color={'black'} size={'50px'} /> :
             listTask.slice(0, 5).map((item: any) => (
-              <div key={item.task_id} className="border rounded-lg shadow p-4 text-white w-[60%] mx-auto m-5 bg-gray-900">
+              <div key={item.task_id} className="border rounded-lg shadow p-4 text-white w-[45%] mx-auto m-5 bg-gray-900">
                 <div className="p-1 flex justify-between items-center">
                   <p className={`text-sm ${item.is_completed ? 'line-through' : ''}`}>{item.title}</p>
                   <div className="flex flex-row items-center">

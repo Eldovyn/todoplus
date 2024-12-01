@@ -59,7 +59,7 @@ const AddTask: React.FC<AddTaskProps> = ({ listTask, setListTask }) => {
     return (
         <>
             <form className="mb-3 mt-3 flex justify-center items-center" onSubmit={loading ? () => { } : handleSubmit}>
-                <div className="flex flex-col mb-3 w-[60%]">
+                <div className="flex flex-col mb-3 w-[45%]">
                     <div className="flex items-center">
                         <input
                             onChange={(e) => setTitle(e.target.value)}
