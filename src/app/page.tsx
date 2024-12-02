@@ -11,6 +11,7 @@ import TrashTask from "@/components/ui/Home/TrashTask";
 import EditTask from "@/components/ui/Home/EditTask";
 import Completed from "@/components/ui/Home/Completed";
 import { apiAllTask } from "@/api/task";
+import { redirect } from 'next/navigation';
 
 const Home: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -40,6 +41,10 @@ const Home: React.FC = () => {
       const resp = await response.json();
       if (response.status === 200) {
         setListTask(resp.data.tasks);
+      }
+      if (response.status === 403) {
+        Cookies.remove('accessToken');
+        redirect('/login');
       }
       setLoading(false);
     }

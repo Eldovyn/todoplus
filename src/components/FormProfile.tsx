@@ -3,6 +3,7 @@ import Cookies from "js-cookie";
 import { apiUpdateUserProfile, apiGetUser } from "@/api/user";
 import LoadingSpinnerComponent from 'react-spinners-components';
 import { alertSuccess, alertFailed } from "./ui/Alert";
+import { redirect } from 'next/navigation';
 
 const FormProfile: React.FC = () => {
     const [email, setEmail] = useState<string>('');
@@ -48,6 +49,10 @@ const FormProfile: React.FC = () => {
             if (api_me.status === 200 && resp.data) {
                 setEmail(resp.data.email || '');
                 setUsername(resp.data.username || '');
+            }
+            if (api_me.status === 403) {
+                Cookies.remove('accessToken');
+                redirect('/login');
             }
         };
         fetchUserData();
