@@ -67,9 +67,23 @@ function HistoryPage() {
     return (
         <>
             <NavBar isOpen={isOpen} setIsOpen={setIsOpen} />
-            <div className='bg-gray-900 mb-3 text-white font-semibold mt-[10rem] rounded-md flex justify-center items-center w-[45%] mx-auto p-4'>
+            <div className='bg-gray-900 mt-[10rem] mb-3 text-white font-semibold rounded-md flex justify-center items-center w-[45%] mx-auto p-4'>
                 <MdOutlineHistoryToggleOff size={25} />
                 <div className="me-1 ms-1">History</div>
+            </div>
+            <div className="flex items-center justify-end me-[27.6%]">
+                <div className="relative w-[13%]">
+                    <input
+                        type="text"
+                        placeholder="Cari Title...."
+                        className="border-gray-900 border rounded-md mt-3 mb-3 w-full p-2 pr-10 active:border-gray-900"
+                    />
+                    <div className="absolute inset-y-0 right-0 flex items-center pr-3">
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-gray-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2">
+                            <path strokeLinecap="round" strokeLinejoin="round" d="M21 21l-4.35-4.35m2.35-8a7 7 0 11-14 0 7 7 0 0114 0z" />
+                        </svg>
+                    </div>
+                </div>
             </div>
             <br />
             <hr className='mx-auto w-[45%]' />
