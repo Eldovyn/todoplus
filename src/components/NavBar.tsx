@@ -40,7 +40,7 @@ const NavBar: React.FC<NavBarProps> = ({ isOpen, setIsOpen }) => {
             <nav className="relative bg-gray-900 p-4">
                 <div className="container mx-auto flex justify-between items-center">
                     <div className="flex items-center gap-2 overflow-visible">
-                        <Image src={IconWeb} alt="" className="w-10" />
+                        <Image src={IconWeb} alt="IconWeb" className="w-10" />
                         <p className="font-bold text-md text-white min-w-[6rem]">TodoPlus</p>
                     </div>
                     <button
@@ -57,7 +57,7 @@ const NavBar: React.FC<NavBarProps> = ({ isOpen, setIsOpen }) => {
                             viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg"
                         >
-                            <Image src={profileUrl} alt="" width={25} height={25} className="rounded-full" />
+                            <Image src={profileUrl} alt="Profile Image" width={25} height={25} className="rounded-full" />
                         </svg>
                     </button>
                     <div
