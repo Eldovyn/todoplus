@@ -1,14 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { IoMdAddCircle } from "react-icons/io";
 import { MdOutlineHistoryToggleOff } from "react-icons/md";
 import IconWeb from '../../public/IconRemoverBg.png';
+import Image from "next/image";
 import Dropdown from "./ui/Dropdown";
 import Link from 'next/link';
-import { apiGetUser } from "@/api/user";
-import Cookies from "js-cookie";
-import { redirect } from "next/navigation";
-import Image from "next/image";
-import defaultAvatar from '../../public/avatar.jpg';
 
 interface NavBarProps {
     isOpen: boolean;
@@ -16,31 +12,12 @@ interface NavBarProps {
 }
 
 const NavBar: React.FC<NavBarProps> = ({ isOpen, setIsOpen }) => {
-    const [profileUrl, setProfileUrl] = useState(defaultAvatar);
-
-    useEffect(() => {
-        const fetchMe = async () => {
-            const accessToken = Cookies.get('accessToken');
-            const response = await apiGetUser(accessToken ?? '');
-            const resp = await response.json();
-            if (response.status === 200 && resp.data) {
-                console.log(resp.data);
-                setProfileUrl(resp.data.avatar || defaultAvatar);
-            } else {
-                Cookies.remove('accessToken');
-                redirect('/login');
-            }
-        }
-
-        fetchMe();
-    }, []);
-
     return (
         <>
             <nav className="relative bg-gray-900 p-4">
                 <div className="container mx-auto flex justify-between items-center">
                     <div className="flex items-center gap-2 overflow-visible">
-                        <Image src={IconWeb} alt="IconWeb" className="w-10" />
+                        <Image src={IconWeb} alt="" className="w-10" />
                         <p className="font-bold text-md text-white min-w-[6rem]">TodoPlus</p>
                     </div>
                     <button
@@ -57,7 +34,12 @@ const NavBar: React.FC<NavBarProps> = ({ isOpen, setIsOpen }) => {
                             viewBox="0 0 24 24"
                             xmlns="http://www.w3.org/2000/svg"
                         >
-                            <Image src={profileUrl} alt="Profile Image" width={25} height={25} className="rounded-full" />
+                            <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth="2"
+                                d="M4 6h16M4 12h16m-7 6h7"
+                            ></path>
                         </svg>
                     </button>
                     <div
@@ -68,7 +50,7 @@ const NavBar: React.FC<NavBarProps> = ({ isOpen, setIsOpen }) => {
                             <li className="nav-item">
                                 <Link href="/">
                                     <div className="flex flex-row text-white items-center cursor-pointer">
-                                        <IoMdAddCircle size={25} />
+                                        <IoMdAddCircle size={25}/>
                                         <div className="me-1 ms-1">Todo List</div>
                                     </div>
                                 </Link>
