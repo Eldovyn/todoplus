@@ -118,7 +118,7 @@ function HistoryPage() {
                     </div>
                 </div>
                 <br />
-                <hr className='mx-auto w-[45%]' />
+                {listTask ? '' : <hr className='mx-auto w-[45%]' />}
                 <br />
                 {loading ? (
                     <LoadingSpinnerComponent type={'Spinner'} color={'black'} size={'50px'} />
@@ -136,7 +136,7 @@ function HistoryPage() {
                         ))
                     ) : ''
                 )}
-                {loading ? '' : <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} itemsPerPage={itemsPerPage} totalItems={totalItems} totalPages={totalPage} pageLimit={5} />}
+                {loading ? '' : listTask ? '' : <Pagination currentPage={currentPage} setCurrentPage={setCurrentPage} itemsPerPage={itemsPerPage} totalItems={totalItems} totalPages={totalPage} pageLimit={5} />}
                 <Modal
                     isOpen={isModalOpen}
                     onClose={closeModal}
