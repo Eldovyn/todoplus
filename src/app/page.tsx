@@ -54,8 +54,8 @@ const Home: React.FC = () => {
   return (
     <>
       <NavBar isOpen={isOpen} setIsOpen={setIsOpen} />
-      <div className="mx-auto px-4 w-full text-center">
-        <p className="text-black font-bold text-3xl text-center pt-[6rem]">Apa Rencanamu Hari Ini ?</p>
+      <div className="mx-auto px-4 w-full text-center mt-[5rem]">
+        <p className="text-black font-bold text-3xl text-center">Apa Rencanamu Hari Ini ?</p>
         <AddTask listTask={listTask} setListTask={setListTask} />
         {listTask.length > 0 && (<> <br /> <hr className="w-[45%] mx-auto" /> <br /> </>)}
         {

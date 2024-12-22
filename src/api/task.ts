@@ -90,5 +90,16 @@ const apiUpdateTitle = async (accessToken: string, title: string, id: string, li
     return response;
 }
 
+const apiSearchTitle = async (accessToken: string, title: string, limit: string) => {
+    const response = await fetch(`${process.env.NEXT_PUBLIC_TODOPLUS_API}todoplus/task/title?title=${title}&limit=${limit}`, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${accessToken}`,
+        },
+    });
+    return response;
+}
 
-export { apiTaskPagination, apiAllTask, apiAddTask, apiDeleteTask, apiTaskComplete, apiUpdateTitle };
+
+export { apiSearchTitle,apiTaskPagination, apiAllTask, apiAddTask, apiDeleteTask, apiTaskComplete, apiUpdateTitle };
